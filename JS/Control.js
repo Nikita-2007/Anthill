@@ -1,14 +1,13 @@
 //Симулятор муравейника
 
 class Control {
-    constructor(view) {
-        this.view = view;
+    constructor() {
         this.fps = 128;
         setInterval(() => this.update(), this.fps);
     }
 
     update() {
-        this.view.draw();
+        view.draw();
     }
 
 }

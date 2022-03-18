@@ -1,77 +1,97 @@
 //Симулятор муравейника
 
 class Ant {
-    constructor(ctx) {
-        this.ctx = ctx;
+    constructor() {
+        this.pose = false;
+        this.size = 1;
     }
-    draw() {
-        this.ctx.lineWidht = 5;
-        this.ctx.strokeStyle='rgb(64, 32, 16)';
-        this.ctx.fillStyle = 'Sienna'
 
-        this.ctx.beginPath();
+    draw(x, y, ang, col) {
+        
+        //Данные для расчёта
+        let ctx = view.ctx;
+        this.pose = !this.pose;
+        let size5 = this.size;
+        let size10 = this.size*2;
+        let size15 = this.size*3;
+        let size18 = this.size*3.6;
+        let size20 = this.size*4;
+        let size25 = this.size*5.6;
+        let size28 = this.size*5.6;
+        let size30 = this.size*6;
+        let size32 = this.size*6.4;
+        let size40 = this.size*8;
+        let size45 = this.size*9;
+        let size50 = this.size*10;
+        let size55 = this.size*11;
+        let size65 = this.size*13;
+        let size100 = this.size*20;
+
+        ctx.lineWidth = 1.5;
+        ctx.strokeStyle='rgb(32, 16, 8)';
+        ctx.fillStyle = col;
+
+        //Поворот
+        ctx.save();
+        ctx.translate(x, y);
+        ctx.rotate(ang);
+        ctx.translate(-x, -y);
+
+        ctx.beginPath();
 
         //Ноги левые
-        this.ctx.moveTo(125, 100);
-        this.ctx.lineTo(100, 130);
-        this.ctx.moveTo(100, 130);
-        this.ctx.lineTo(80, 140);
+        ctx.moveTo(x, y+size25);
+        ctx.lineTo(x+size30, y);
+        ctx.lineTo(x+size40, y-size20);
 
-        this.ctx.moveTo(128, 100);
-        this.ctx.lineTo(128, 130);
-        this.ctx.moveTo(128, 130);
-        this.ctx.lineTo(125, 150);
+        ctx.moveTo(x, y+size28);
+        ctx.lineTo(x+size30, y+size28);
+        ctx.lineTo(x+size50, y+size45);
 
-
-        this.ctx.moveTo(132, 100);
-        this.ctx.lineTo(155, 130);
-        this.ctx.moveTo(155, 130);
-        this.ctx.lineTo(175, 140);
+        ctx.moveTo(x, y+size32);
+        ctx.lineTo(x+size30, y+size55);
+        ctx.lineTo(x+size40, y+size100);
 
         //Ноги правые
-        this.ctx.moveTo(125, 100);
-        this.ctx.lineTo(100, 70);
-        this.ctx.moveTo(100, 70);
-        this.ctx.lineTo(80, 60);
+        ctx.moveTo(x, y+size25);
+        ctx.lineTo(x-size30, y);
+        ctx.lineTo(x-size40, y-size20);
 
-        this.ctx.moveTo(128, 100);
-        this.ctx.lineTo(128, 70);
-        this.ctx.moveTo(128, 70);
-        this.ctx.lineTo(125, 50);
+        ctx.moveTo(x, y+size28);
+        ctx.lineTo(x-size30, y+size28);
+        ctx.lineTo(x-size50, y+size45);
 
+        ctx.moveTo(x, y+size32);
+        ctx.lineTo(x-size30, y+size55);
+        ctx.lineTo(x-size40, y+size100);
 
-        this.ctx.moveTo(132, 100);
-        this.ctx.lineTo(155, 70);
-        this.ctx.moveTo(155, 70);
-        this.ctx.lineTo(175, 60);
-
-        //Усики
-        this.ctx.moveTo(95, 95);
-        this.ctx.lineTo(70, 85);
-
-        this.ctx.moveTo(95, 105);
-        this.ctx.lineTo(70, 115);
-
-
-        this.ctx.fill();
-        this.ctx.stroke();
-        this.ctx.closePath();
+        ctx.stroke();
+        ctx.closePath();
 
         //Телo
-        this.ctx.beginPath();
-        this.ctx.ellipse(100, 100, 10, 10, 0, 0, Math.PI*2);
-        this.ctx.stroke();
-        this.ctx.fill();
-        this.ctx.closePath();
-        this.ctx.beginPath();
-        this.ctx.ellipse(128, 100, 18, 10, 0, 0, Math.PI*2);
-        this.ctx.stroke();
-        this.ctx.fill();
-        this.ctx.closePath();
-        this.ctx.beginPath();
-        this.ctx.ellipse(165, 100, 20, 15, 0, 0, Math.PI*2);
-        this.ctx.stroke();
-        this.ctx.fill();
-        this.ctx.closePath();
+        ctx.beginPath();
+        ctx.ellipse(x, y, size10, size10, 0, 0, Math.PI*2);
+        ctx.stroke();
+        ctx.fill();
+        ctx.closePath();
+        ctx.beginPath();
+        ctx.ellipse(x, y+size28, size10, size18, 0, 0, Math.PI*2);
+        ctx.stroke();
+        ctx.fill();
+        ctx.closePath();
+        ctx.beginPath();
+        ctx.ellipse(x, y+size65, size15, size20, 0, 0, Math.PI*2);
+        
+        //Усики
+        ctx.moveTo(x-size5, y-size5);
+        ctx.lineTo(x-size15 + this.pose, y-size30);
+
+        ctx.moveTo(x+size5, y-size5);
+        ctx.lineTo(x+size15 - this.pose, y-size30);
+        
+        ctx.stroke();
+        ctx.fill();
+        ctx.closePath();
+        ctx.restore()
     }
 }
