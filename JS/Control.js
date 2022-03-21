@@ -9,5 +9,4 @@ class Control {
     update() {
         view.draw();
     }
-
 }

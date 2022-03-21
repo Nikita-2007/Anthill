@@ -1,31 +1,28 @@
 //Симулятор муравейника
 
 class Ant {
-    constructor() {
-        this.x = Math.round(Math.random()*window.innerWidth);
-        this.y = Math.round(Math.random()*window.innerHeight);
+    constructor(color, x, y) {
         this.ang = Math.round(Math.random()*Math.PI*2);
-        this.col = ('#'+Math.floor(Math.random()*16777216).toString(16).padStart(6, '0'));
         this.pose = false;
+        this.color = color;
+        this.x = x + Math.floor(Math.random() * 800)-400;
+        this.y = y + Math.floor(Math.random() * 800)-400;
     }
 
-    draw(fw) {
+    draw(ctx, fw) {
         let x = this.x;
         let y = this.y;
-        let ang = this.ang;
-        let col = this.col;
         //Данные для расчёта
-        let ctx = view.ctx;
         this.pose = !this.pose;
 
         ctx.lineWidth = 1.5;
         ctx.strokeStyle='rgb(32, 16, 8)';
-        ctx.fillStyle = col;
+        ctx.fillStyle = this.color;
 
         //Поворот
         ctx.save();
         ctx.translate(x, y);
-        ctx.rotate(ang*Math.random()*2);
+        ctx.rotate(this.ang*Math.random()*2);
         ctx.translate(-x, -y);
 
         ctx.beginPath();
@@ -83,7 +80,7 @@ class Ant {
         ctx.stroke();
         ctx.fill();
         ctx.closePath();
-        ctx.restore()
+        ctx.restore();
     }
 }
 

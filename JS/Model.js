@@ -3,10 +3,12 @@
 class Model {
     constructor() {
         this.family = 54;
-        this.listAnt = [];
-        for (let i = 0; i < this.family; i++) {
-            let ant = new Ant();
-            this.listAnt.push(ant);
+        this.colony = 3;
+        this.listColony = [];
+
+        for (let i = 0; i < this.colony; i++) {
+            let col = new Colony(this.family);
+            this.listColony.push(col);
         }
     }
 }
