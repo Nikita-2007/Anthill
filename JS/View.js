@@ -12,6 +12,15 @@ class View {
     draw() {
         this.ctx.fillStyle = 'darkslategray';
         this.ctx.fillRect(0, 0, this.canvas.width, this.canvas.height);
+        for (let food of model.listFood) {
+            food.draw(this.ctx);
+        }
+        for (let rock of model.listRock) {
+            rock.draw(this.ctx);
+        }
+        for (let block of model.listBlock) {
+            block.draw(this.ctx);
+        }
         for (let colony of model.listColony) {
             for (let ant of colony.listAnt) {
                 ant.draw(this.ctx, this.fw);

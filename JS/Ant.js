@@ -5,13 +5,21 @@ class Ant {
         this.ang = Math.round(Math.random()*Math.PI*2);
         this.pose = false;
         this.color = color;
-        this.x = x + Math.floor(Math.random() * 800)-400;
-        this.y = y + Math.floor(Math.random() * 800)-400;
+        this.pos = {
+            x: x + Math.floor(Math.random() * 800)-400,
+            y: y + Math.floor(Math.random() * 800)-400
+        };
+        this.target = {
+            x: window.innerWidth/2,
+            y: window.innerHeight
+        };
     }
 
     draw(ctx, fw) {
-        let x = this.x;
-        let y = this.y;
+        let x = this.pos.x;
+        let y = this.pos.y;
+        x += Math.floor(Math.random()*20-10);
+        y += Math.floor(Math.random()*20-10);
         //Данные для расчёта
         this.pose = !this.pose;
 
@@ -22,7 +30,7 @@ class Ant {
         //Поворот
         ctx.save();
         ctx.translate(x, y);
-        ctx.rotate(this.ang*Math.random()*2);
+        ctx.rotate(this.ang*Math.random()/3);
         ctx.translate(-x, -y);
 
         ctx.beginPath();
@@ -81,6 +89,8 @@ class Ant {
         ctx.fill();
         ctx.closePath();
         ctx.restore();
+        this.pos.x = x;
+        this.pos.y = y;
     }
 }
 
