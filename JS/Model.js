@@ -2,7 +2,7 @@
 
 class Model {
     constructor() {
-        this.family = 75;
+        this.family = 100;
         this.colony = 2;
         this.numFood = 250;
         this.numRock = 350;

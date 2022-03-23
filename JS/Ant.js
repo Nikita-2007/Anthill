@@ -2,7 +2,6 @@
 
 class Ant {
     constructor(color, x, y) {
-        this.ang = Math.round(Math.random()*Math.PI*2);
         this.pose = false;
         this.color = color;
         this.pos = {
@@ -10,27 +9,40 @@ class Ant {
             y: y + Math.floor(Math.random() * 800)-400
         };
         this.target = {
-            x: window.innerWidth/2,
-            y: window.innerHeight
+            x: Math.floor(Math.random() * innerWidth),
+            y: Math.floor(Math.random() * innerHeight)
         };
+        this.speed = 4
+        this.ang = this.getAngle(this.pos, this.target);
+    }
+
+    update() {
+        this.pos.x = Math.round(this.pos.x + this.speed * Math.cos(this.ang-Math.PI/2));
+        this.pos.y = Math.round(this.pos.y + this.speed * Math.sin(this.ang-Math.PI/2));
+        if (Math.abs(this.pos.x - this.target.x) < this.speed*2 && Math.abs(this.pos.y - this.target.y < this.speed*2)) {
+            this.target = {
+                x: Math.floor(Math.random() * innerWidth),
+                y: Math.floor(Math.random() * innerHeight)
+            };
+         }
     }
 
     draw(ctx, fw) {
+        this.update();
+        this.ang = this.getAngle(this.pos, this.target);
         let x = this.pos.x;
         let y = this.pos.y;
-        x += Math.floor(Math.random()*20-10);
-        y += Math.floor(Math.random()*20-10);
         //Данные для расчёта
         this.pose = !this.pose;
 
-        ctx.lineWidth = 1.5;
+        ctx.lineWidth = 2.5;
         ctx.strokeStyle='rgb(32, 16, 8)';
         ctx.fillStyle = this.color;
 
         //Поворот
         ctx.save();
         ctx.translate(x, y);
-        ctx.rotate(this.ang*Math.random()/3);
+        ctx.rotate(this.ang);
         ctx.translate(-x, -y);
 
         ctx.beginPath();
@@ -89,14 +101,17 @@ class Ant {
         ctx.fill();
         ctx.closePath();
         ctx.restore();
-        this.pos.x = x;
-        this.pos.y = y;
+    }
+
+    //Расчёт угла
+    getAngle(pos, target) {
+        return Math.atan2(pos.y - target.y, pos.x - target.x) - Math.PI/2;
     }
 }
 
 class FlyWeidth {
     constructor() {
-        this.size = 1;
+        this.size = 1
         this.size5 = this.size;
         this.size10 = this.size*2;
         this.size15 = this.size*3;
