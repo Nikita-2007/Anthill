@@ -29,4 +29,11 @@ class Model {
             this.listBlock.push(block);
         }
     }
+    update() {
+        for (let colony of this.listColony) {
+            for(let ant of colony.listAnt) {
+                ant.update();
+            }
+        }
+    }
 }

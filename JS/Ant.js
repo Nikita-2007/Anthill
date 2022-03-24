@@ -28,7 +28,6 @@ class Ant {
     }
 
     draw(ctx, fw) {
-        this.update();
         this.ang = this.getAngle(this.pos, this.target);
         let x = this.pos.x;
         let y = this.pos.y;
