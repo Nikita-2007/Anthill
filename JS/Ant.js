@@ -1,18 +1,18 @@
 //Симулятор муравейника
 
 class Ant {
-    constructor(color, x, y) {
+    constructor(color, pos) {
         this.pose = false;
         this.color = color;
         this.pos = {
-            x: x + Math.floor(Math.random() * 800)-400,
-            y: y + Math.floor(Math.random() * 800)-400
+            x: pos.x,
+            y: pos.y
         };
         this.target = {
             x: Math.floor(Math.random() * innerWidth),
             y: Math.floor(Math.random() * innerHeight)
         };
-        this.speed = 4
+        this.speed = 4;
         this.ang = this.getAngle(this.pos, this.target);
     }
 
