@@ -1,30 +1,30 @@
 //Симулятор муравейника
 
 class Ant {
-    constructor(color, pos) {
-        this.pose = false;
-        this.color = color;
+    constructor(colony) {
+        this.color = colony.color;
         this.pos = {
-            x: pos.x,
-            y: pos.y
+            x: colony.pos.x,
+            y: colony.pos.y
         };
         this.target = {
-            x: Math.floor(Math.random() * innerWidth),
-            y: Math.floor(Math.random() * innerHeight)
+            x: Math.floor(Math.random() * window.innerWidth),
+            y: Math.floor(Math.random() * window.innerHeight)
         };
         this.speed = 4;
         this.ang = this.getAngle(this.pos, this.target);
+        this.action=()=>Action.wait(this);
+        this.timer = 20;
+        this.pose = false;
     }
 
     update() {
-        this.pos.x = Math.round(this.pos.x + this.speed * Math.cos(this.ang-Math.PI/2));
-        this.pos.y = Math.round(this.pos.y + this.speed * Math.sin(this.ang-Math.PI/2));
-        if (Math.abs(this.pos.x - this.target.x) < this.speed*2 && Math.abs(this.pos.y - this.target.y < this.speed*2)) {
-            this.target = {
-                x: Math.floor(Math.random() * innerWidth),
-                y: Math.floor(Math.random() * innerHeight)
-            };
-         }
+        this.action();
+        this.timer--;
+        if (this.timer < 0) {
+            this.action=()=>Action.wait(this);
+            this.timer = 20;
+        }
     }
 
     draw(ctx, fw) {

@@ -23,7 +23,7 @@ class Control {
         view.draw();
     }
 
-    onClick=(e) => {
+    onClick(e) {
         if (!this.focus) {
             let food = new Food();
             food.pos = {
@@ -53,7 +53,7 @@ class Control {
     }
 
     btnName() {
-        if (this.play)
+        if (!this.play)
             this.btnPlay.innerHTML='<i class="fa fa-play" aria-hidden="true"></i>';
         else
             this.btnPlay.innerHTML='<i class="fa fa-pause" aria-hidden="true"></i>';
