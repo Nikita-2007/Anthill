@@ -1,3 +1,5 @@
+//Симулятор муравейника
+
 class Items {
     constructor() {
         this.pos = {

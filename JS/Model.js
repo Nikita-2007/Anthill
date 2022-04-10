@@ -2,8 +2,8 @@
 
 class Model {
     constructor() {
-        this.base = 2;
-        this.food = 5;
+        this.base = 1;
+        this.food = 1;
         this.numFood = 250;
         this.numRock = 350;
         this.numBlock = 300;

@@ -13,27 +13,33 @@ class Ant {
         };
         this.speed = 4;
         this.ang = this.getAngle(this.pos, this.target);
-        this.action=()=>Action.wait(this);
-        this.timer = 20;
+        this.action=()=>Action.find(this);
+        this.timer = 0;
         this.pose = false;
+        this.ai = colony.ai;
+        this.life = 100;
     }
 
     update() {
-        this.action();
         this.timer--;
-        if (this.timer < 0) {
-            this.action=()=>Action.wait(this);
-            this.timer = 20;
+        if (this.timer <= 0) {
+            if (this.life < 0)
+                this.action=()=>Action.dead(this);
+            else {
+                this.action=()=>Action.wait(this);
+                //Осмотрется ._.
+                this.ai.select(this);
+            }
         }
+        this.action();
     }
 
     draw(ctx, fw) {
         this.ang = this.getAngle(this.pos, this.target);
         let x = this.pos.x;
         let y = this.pos.y;
-        //Данные для расчёта
-        this.pose = !this.pose;
 
+        //Данные для расчёта
         ctx.lineWidth = 2.5;
         ctx.strokeStyle='rgb(32, 16, 8)';
         ctx.fillStyle = this.color;
