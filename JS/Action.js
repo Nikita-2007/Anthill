@@ -1,39 +1,72 @@
 //Симулятор муравейника
 
 class Action {
+
+    static listAction = [
+        Action.wait,
+        Action.find,
+        Action.back,
+        Action.move,
+        Action.grab,
+        Action.kick,
+        Action.dead,
+        Action.drop,
+        Action.info,
+        Action.flex
+    ];
+
     static wait(ant) {
-        console.log('Жду');
+        ant.timer = 20;
+        ant.walk = false;
     }
 
     static find(ant) {
-        console.log('Ищу');
-        let angle = ant.ang-Math.PI/2;
-        ant.pos.x += ant.speed * Math.cos(angle);
-        ant.pos.y += ant.speed * Math.sin(angle);
+        ant.timer = 20;
+        ant.walk = true;
+        ant.target = ant.getTarget(ant.pos);
+        ant.angle = ant.getAngle(ant.pos, ant.target);
     }
 
-    static back() {
-        console.log('Возращаюсь');
+    static back(ant) {
+        ant.timer = 20;
+        ant.food = 1;
+        ant.walk = true;
     }
 
-    static move() {
-        console.log('Иду');
+    static move(ant) {
         ant.pose = !ant.pose
+        ant.timer = 20;
+        ant.walk = true;
     }
 
-    static grab() {
-        console.log('Беру');
+    static grab(ant) {
+        ant.timer = 5;
+        ant.walk = false;
     }
 
-    static kick() {
-        console.log('Атакую');
+    static kick(ant) {
+        ant.timer = 5;
+        ant.walk = false;
     }
 
-    static dead() {
-        console.log('Умер :c');
+    static dead(ant) {
+        ant.timer = 0;
+        ant.walk = false;
     }
 
-    static drop() {
-        console.log('Бросаю');
+    static drop(ant) {
+        ant.timer = 5;
+        ant.food = 0;
+        ant.walk = false;
+    }
+
+    static info(ant) {
+        ant.timer = 20;
+        ant.walk = false;
+    }
+
+    static flex(ant) {
+        ant.timer = 50;
+        ant.walk = false;
     }
 }
