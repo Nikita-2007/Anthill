@@ -15,8 +15,10 @@ class Ant {
         this.ai = colony.ai;
         this.speed = 4;
         this.life = 100;
-        this.food = 1;
+        this.load = false;
         this.walk = true;
+        this.range = 30;
+        this.listItems = []; /////////////////////////////////|
     }
 
     update() {
@@ -25,10 +27,14 @@ class Ant {
             if (this.life < 0)
                 this.action=Action.dead;
             else {
-                //Осмотрется ._.
+                this.pos = {
+                    x: Math.round(this.pos.x),
+                    y: Math.round(this.pos.y)
+                }
+                model.vision(this);
                 this.ai.select(this);
                 this.action(this);
-                console.log(this.action.name);
+                console.log(this.action.name, this.listItems);
             }
         }
         if (this.walk)
@@ -51,16 +57,25 @@ class Ant {
         ctx.translate(x, y);
         ctx.rotate(this.angle);
         ctx.translate(-x, -y);
-    
+
+        if (this.load) {
+            this.load.pos={
+                x: x,
+                y: y-fw.size32
+            }
+            this.load.draw(ctx);
+        }
+
+
         //Корм
-        if (this.food > 0) {
+        /*if (this.food > 0) {
             ctx.beginPath();
             ctx.fillStyle = 'Crimson';//Food.color;
             ctx.ellipse(x, y-fw.size10, fw.size28, fw.size28, 0, 0, Math.PI*2);
             ctx.fill();
             ctx.stroke();
             ctx.closePath();
-        }
+        }*/
 
         //Данные для расчёта
         ctx.lineWidth = 2.5;

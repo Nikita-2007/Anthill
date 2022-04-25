@@ -3,8 +3,8 @@
 class View {
     constructor() {
         this.canvas = document.getElementById('canvas');
-        this.canvas.width = window.innerWidth;
-        this.canvas.height = window.innerHeight;
+        this.canvas.width = model.size.width;
+        this.canvas.height = model.size.height;
         this.ctx = this.canvas.getContext('2d');
         this.fw = new FlyWeidth();
     }

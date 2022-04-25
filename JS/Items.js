@@ -7,12 +7,14 @@ class Items {
             y: Math.round(Math.random()*window.innerHeight)
         };
         this.color = 'White'
+        this.Pi2 = Math.PI*2
     }
+
 
     draw(ctx) {
         ctx.fillStyle = this.color;
         ctx.beginPath();
-        ctx.fillRect(this.pos.x, this.pos.y, 5, 5);
+        ctx.ellipse(this.pos.x, this.pos.y, 3, 3, 0, 0, this.Pi2);
         ctx.fill();
         ctx.closePath();
     }

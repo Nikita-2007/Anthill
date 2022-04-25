@@ -2,19 +2,36 @@
 
 class PI {
     select(ant) {
-        if (ant.pose) {
-            ant.action=Action.wait;
-            ant.timer = 20;
-        } else {
-            ant.action=Action.find;
-            ant.timer = 20;
+        if (ant.life <= 0)
+            ant.action = Action.dead;
 
-            ant.target = {
-                x: Math.floor(Math.random() * window.innerWidth),
-                y: Math.floor(Math.random() * window.innerHeight)
-            };
-        }
-        ant.pose = !ant.pose;
+        else if (ant.load = true & true)
+            ant.action = Action.drop;
+
+        else if (true)
+            ant.action = Action.kick;
+
+        else if (true)
+            ant.action = Action.move;
+
+        else if (true)
+            ant.action = Action.grab;
+
+        else if (true)
+            ant.action = Action.back;
+
+        else if (true)
+            ant.action = Action.info;
+
+        else if (true) 
+            ant.action = Action.flex;
+        else if (!ant.load)
+            ant.action = Action.find;
+
+        else
+            ant.action = Action.wait;
+
+    
     }
 }
 
