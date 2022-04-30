@@ -7,6 +7,7 @@ class Ant {
             x: colony.pos.x,
             y: colony.pos.y
         };
+        this.range = 30;
         this.target = {pos: model.rndPos(this.pos, this.range)};
         this.angle = this.getAngle(this.pos, this.target);
         this.action = Action.wait;
@@ -18,7 +19,6 @@ class Ant {
         this.life = 100;
         this.load = false;
         this.walk = true;
-        this.range = 30;
     }
 
     update() {

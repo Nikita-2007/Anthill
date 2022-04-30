@@ -83,7 +83,7 @@ class Model {
         this.sector = this.getSector(pos, range);
         return {
             x: Math.round(Math.random() * (this.sector.right - this.sector.left)+this.sector.left),
-            y: Math.round(Math.random() * (this.sector.bottom - this.sector.up)+this.sector.up)
+            y: Math.round(Math.random() * (this.sector.bottom - this.sector.top)+this.sector.top)
         };
     }
     
