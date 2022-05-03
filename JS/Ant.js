@@ -57,6 +57,7 @@ class Ant {
         ctx.rotate(this.angle);
         ctx.translate(-x, -y);
 
+        //Груз
         if (this.load) {
             this.load.pos={
                 x: x,
@@ -64,17 +65,6 @@ class Ant {
             }
             this.load.draw(ctx);
         }
-
-
-        //Корм
-        /*if (this.food > 0) {
-            ctx.beginPath();
-            ctx.fillStyle = 'Crimson';//Food.color;
-            ctx.ellipse(x, y-fw.size10, fw.size28, fw.size28, 0, 0, Math.PI*2);
-            ctx.fill();
-            ctx.stroke();
-            ctx.closePath();
-        }*/
 
         //Данные для расчёта
         ctx.lineWidth = 2.5;
@@ -131,18 +121,22 @@ class Ant {
 
         ctx.moveTo(x+fw.size5, y-fw.size5);
         ctx.lineTo(x+fw.size15 - this.pose, y-fw.size30);
-        
+
         ctx.stroke();
         ctx.fill();
         ctx.closePath();
         ctx.restore();
+
+
+        ctx.fillStyle='White';
         ctx.font = "8pt Arial"
-        ctx.fillText(this.target.pos.x, x, y-20);
+        ctx.fillText(this.action.name + " " + this.goal.name + " " + this.timer, x, y-20);
+        ctx.strokeRect(x-this.range, y-this.range, this.range*2, this.range*2);
     }
 
     //Расчёт угла
     getAngle(pos, target) {
-        return Math.atan2(pos.y - target.pos.y, pos.x - target.pos.x) + Math.PI/2;
+        return Math.atan2(pos.y - target.pos.y, pos.x - target.pos.x) - Math.PI/2;
     }
 }
 

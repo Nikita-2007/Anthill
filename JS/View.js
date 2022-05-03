@@ -6,6 +6,8 @@ class View {
         this.canvas.width = model.size.width;
         this.canvas.height = model.size.height;
         this.ctx = this.canvas.getContext('2d');
+        this.ctx.textAlign = 'center';
+        this.ctx.textBaseline = 'middle';
         this.fw = new FlyWeidth();
     }
 

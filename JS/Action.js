@@ -29,20 +29,24 @@ class Action {
     }
 
     static back(ant) {
+        ant.goal = Colony;
+        ant.target = {pos: model.rndPos(ant.pos, ant.range)};
         ant.timer = 20;
         ant.food = 1;
         ant.walk = true;
     }
 
     static move(ant) {
-        ant.pose = !ant.pose
-        ant.timer = 20;
+        ant.timer = Math.round(model.delta(ant.pos, ant.target)/ant.speed-10);
+        ant.angle = ant.getAngle(ant.pos, ant.target);
         ant.walk = true;
     }
 
     static grab(ant) {
+        ant.goal = Colony;
         ant.timer = 5;
         ant.walk = false;
+        ant.load = new Food();
     }
 
     static kick(ant) {

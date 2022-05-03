@@ -1,6 +1,7 @@
 //Симулятор муравейника
 
 var model, view, control;
+
 let listClass = [
     'AI',
     'Action',
