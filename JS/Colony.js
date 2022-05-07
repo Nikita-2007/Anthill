@@ -15,12 +15,12 @@ class Colony {
     }
 
     update() {
-        if (this.food > 0) {
+        if (this.food > 100) {
             this.delay--;
             if (this.delay < 0) {
                 let ant = new Ant(this);
                 this.listAnt.push(ant);
-                this.food--;
+                this.food -= 100;
                 this.delay = Math.round(this.timer/6,666666666666667);
             }
         }
@@ -35,5 +35,10 @@ class Colony {
         ctx.arc(this.pos.x, this.pos.y, 32, 0, Math.PI*2);
         ctx.fill();
         ctx.closePath();
+        if (control.info) {
+            ctx.fillStyle='White';
+            ctx.font = "8pt Arial"
+            ctx.fillText(this.listAnt.length, this.pos.x, this.pos.y);
+        }
     }
 }

@@ -4,16 +4,16 @@ class PI {
     select(ant) {
         if (ant.life <= 0)
             ant.action = Action.dead;
-        else if (false)
+        else if (model.delta(ant.pos, ant.target) < 12 && ant.target instanceof Colony && ant.load)
             ant.action = Action.drop;
         else if (false)
             ant.action = Action.kick;
+        else if (ant.target instanceof ant.goal && model.delta(ant.pos, ant.target) > 12)
+            ant.action = Action.move;
         else if (ant.load instanceof Food)
             ant.action = Action.back;
         else if (model.delta(ant.pos, ant.target) < 12 && ant.target instanceof Food && !ant.laod)
             ant.action = Action.grab;
-        else if (ant.target instanceof ant.goal)
-            ant.action = Action.move;
         else if (false)
             ant.action = Action.info;
         else if (false) 

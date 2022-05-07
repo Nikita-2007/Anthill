@@ -5,6 +5,7 @@ class Control {
         this.fps = 128;
         this.play = false;
         this.focus = false;
+        this.info = false;
 
         this.btnPlay = document.getElementById('play');
         this.btnClear = document.getElementById('clear');
@@ -15,6 +16,7 @@ class Control {
 
         setInterval(() => this.update(), this.fps);
         onclick = (e) => this.onClick(e);
+        onkeydown = (e) => this.onKeyDown(e);
     }
 
     update() {
@@ -31,8 +33,14 @@ class Control {
                 y: e.clientY
             };
             model.listFood.push(food);
+            model.map[food.pos.x][food.pos.y] = food;
         }
         this.focus = false;
+    }
+
+    onKeyDown(e) {
+        if (e.keyCode == 17)
+            this.info = !this.info;
     }
 
     Game() {

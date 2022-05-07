@@ -127,11 +127,12 @@ class Ant {
         ctx.closePath();
         ctx.restore();
 
-
-        ctx.fillStyle='White';
-        ctx.font = "8pt Arial"
-        ctx.fillText(this.action.name + " " + this.goal.name + " " + this.timer, x, y-20);
-        ctx.strokeRect(x-this.range, y-this.range, this.range*2, this.range*2);
+        if (control.info) {
+            ctx.fillStyle='White';
+            ctx.font = "8pt Arial"
+            ctx.fillText(this.action.name + " " + this.goal.name + " " + this.timer, x, y-20);
+            ctx.strokeRect(x-this.range, y-this.range, this.range*2, this.range*2);
+        }
     }
 
     //Расчёт угла

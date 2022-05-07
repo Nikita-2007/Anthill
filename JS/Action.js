@@ -31,8 +31,8 @@ class Action {
     static back(ant) {
         ant.goal = Colony;
         ant.target = {pos: model.rndPos(ant.pos, ant.range)};
+        ant.angle = ant.getAngle(ant.pos, ant.target);
         ant.timer = 20;
-        ant.food = 1;
         ant.walk = true;
     }
 
@@ -46,7 +46,11 @@ class Action {
         ant.goal = Colony;
         ant.timer = 5;
         ant.walk = false;
+        let food = Math.min(ant.target.weight, ant.life/2);
+        ant.target.weight -= food;
         ant.load = new Food();
+        ant.load.weight = food;
+        ////Удалить корм с карты если он закончился\\\\
     }
 
     static kick(ant) {
@@ -61,8 +65,9 @@ class Action {
 
     static drop(ant) {
         ant.timer = 5;
-        ant.food = 0;
         ant.walk = false;
+        ant.target.food += ant.load.weight;
+        ant.load = false;
     }
 
     static info(ant) {
