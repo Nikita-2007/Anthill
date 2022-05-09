@@ -8,9 +8,9 @@ class Model {
         };
         this.base = 3;
         this.food = 256;
-        this.numFood = 250;
-        this.numRock = 350;
-        this.numBlock = 300;
+        this.numFood = 0;
+        this.numRock = 50;
+        this.numBlock = 30;
         
         this.map = [];
         this.air = [];
@@ -18,6 +18,7 @@ class Model {
         this.listFood = [];
         this.listRock = [];
         this.listBlock = [];
+        this.listLabel = [];
         
         this.sector = {
             left:0,

@@ -7,7 +7,7 @@ class Ant {
             x: colony.pos.x,
             y: colony.pos.y
         };
-        this.range = 30;
+        this.range = 50;
         this.target = {pos: model.rndPos(this.pos, this.range)};
         this.angle = this.getAngle(this.pos, this.target);
         this.action = Action.wait;
@@ -74,29 +74,29 @@ class Ant {
         //Ноги левые
         ctx.beginPath();
         ctx.moveTo(x, y+fw.size25);
-        ctx.lineTo(x+fw.size30, y);
-        ctx.lineTo(x+fw.size40, y-fw.size20);
+        ctx.lineTo(x+fw.size30, y + !this.pose*2);
+        ctx.lineTo(x+fw.size40, y-fw.size20 + !this.pose*2);
 
         ctx.moveTo(x, y+fw.size28);
-        ctx.lineTo(x+fw.size30, y+fw.size28);
-        ctx.lineTo(x+fw.size50, y+fw.size45);
+        ctx.lineTo(x+fw.size30, y+fw.size28 + this.pose);
+        ctx.lineTo(x+fw.size50, y+fw.size45 + this.pose);
 
         ctx.moveTo(x, y+fw.size32);
-        ctx.lineTo(x+fw.size30, y+fw.size55);
-        ctx.lineTo(x+fw.size40, y+fw.size100);
+        ctx.lineTo(x+fw.size30, y+fw.size55 + !this.pose*3);
+        ctx.lineTo(x+fw.size40, y+fw.size100 + !this.pose*3);
 
         //Ноги правые
         ctx.moveTo(x, y+fw.size25);
-        ctx.lineTo(x-fw.size30, y);
-        ctx.lineTo(x-fw.size40, y-fw.size20);
+        ctx.lineTo(x-fw.size30, y + this.pose*2);
+        ctx.lineTo(x-fw.size40, y-fw.size20 + this.pose*2);
 
         ctx.moveTo(x, y+fw.size28);
-        ctx.lineTo(x-fw.size30, y+fw.size28);
-        ctx.lineTo(x-fw.size50, y+fw.size45);
+        ctx.lineTo(x-fw.size30, y+fw.size28 + !this.pose);
+        ctx.lineTo(x-fw.size50, y+fw.size45 + !this.pose);
 
         ctx.moveTo(x, y+fw.size32);
-        ctx.lineTo(x-fw.size30, y+fw.size55);
-        ctx.lineTo(x-fw.size40, y+fw.size100);
+        ctx.lineTo(x-fw.size30, y+fw.size55 + this.pose*2);
+        ctx.lineTo(x-fw.size40, y+fw.size100 + this.pose*3);
 
         ctx.stroke();
         ctx.closePath();

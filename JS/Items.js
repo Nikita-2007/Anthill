@@ -50,3 +50,9 @@ class Block extends Items {
         this.color = 'Black'
     }
 }
+
+class Label {
+    constructor() {
+        
+    }
+}

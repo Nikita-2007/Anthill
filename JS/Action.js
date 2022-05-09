@@ -50,7 +50,10 @@ class Action {
         ant.target.weight -= food;
         ant.load = new Food();
         ant.load.weight = food;
+        ant.speed = 2.5
         ////Удалить корм с карты если он закончился\\\\
+        if (ant.target.weight <= 0)
+            model.map[ant.target.pos.x][ant.target.pos.y] = false;
     }
 
     static kick(ant) {
@@ -68,6 +71,7 @@ class Action {
         ant.walk = false;
         ant.target.food += ant.load.weight;
         ant.load = false;
+        ant.speed = 4
     }
 
     static info(ant) {
