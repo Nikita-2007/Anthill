@@ -62,7 +62,7 @@ class Action {
     }
 
     static dead(ant) {
-        ant.timer = 0;
+        ant.timer = -1;
         ant.walk = false;
     }
 
@@ -82,5 +82,6 @@ class Action {
     static flex(ant) {
         ant.timer = 50;
         ant.walk = false;
+        ant.flex = true;
     }
 }

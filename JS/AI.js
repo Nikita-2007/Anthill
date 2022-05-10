@@ -6,17 +6,15 @@ class PI {
             ant.action = Action.dead;
         else if (model.delta(ant.pos, ant.target) < 12 && ant.target instanceof Colony && ant.load && ant.color == ant.target.color)
             ant.action = Action.drop;
-        else if (!ant.laod && ant.target instanceof Ant && ant.color != ant.target.color)
-            ant.action = Action.kick;
-        else if (ant.target instanceof ant.goal && model.delta(ant.pos, ant.target) > 12)
-            ant.action = Action.move;
+        else if (false)
+            ant.action = Action.kick;            
         else if (ant.load instanceof Food)
             ant.action = Action.back;
         else if (model.delta(ant.pos, ant.target) < 12 && ant.target instanceof Food && !ant.laod)
             ant.action = Action.grab;
         else if (false)
             ant.action = Action.info;
-        else if (false) 
+        else if (!ant.load) 
             ant.action = Action.flex;
         else if (!ant.load)
             ant.action = Action.find;

@@ -19,6 +19,8 @@ class Ant {
         this.life = 100;
         this.load = false;
         this.walk = true;
+        this.labelTime = 5;
+        this.flex = false;
     }
 
     update() {
@@ -41,10 +43,25 @@ class Ant {
     }
 
     goStep() {
+        let pos = {
+            x: Math.round(this.pos.x),
+            y: Math.round(this.pos.y)
+        }
+        model.map[pos.x][pos.y] = false;
         let angle = this.angle-Math.PI/2;
         this.pos.x += this.speed * Math.cos(angle);
         this.pos.y += this.speed * Math.sin(angle);
+        pos = {
+            x: Math.round(this.pos.x),
+            y: Math.round(this.pos.y)
+        }
+        model.map[pos.x][pos.y] = this;
         this.pose = !this.pose;
+        this.labelTime--;
+        if (this.labelTime <=0) {
+            model.newLabel(this);
+            this.labelTime = 5;
+        }
     }
 
     draw(ctx, fw) { 
@@ -121,6 +138,11 @@ class Ant {
 
         ctx.moveTo(x+fw.size5, y-fw.size5);
         ctx.lineTo(x+fw.size15 - this.pose, y-fw.size30);
+        
+        if (this.flex) {
+            ;
+            //Жёсткий танец
+        }
 
         ctx.stroke();
         ctx.fill();

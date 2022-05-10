@@ -8,9 +8,9 @@ class Model {
         };
         this.base = 3;
         this.food = 256;
-        this.numFood = 0;
-        this.numRock = 50;
-        this.numBlock = 30;
+        this.numFood = 256;
+        this.numRock = 212;
+        this.numBlock = 128;
         
         this.map = [];
         this.air = [];
@@ -77,6 +77,24 @@ class Model {
                     break;
                 }
             }
+        }
+    }
+
+    newLabel(ant) {
+        let label = new Label(ant);
+        if (!this.air[Math.round(ant.pos.x)][Math.round(ant.pos.y)]) {
+            this.listLabel.push(label);
+            this.air[Math.round(ant.pos.x)][Math.round(ant.pos.y)] = label;
+        }
+        else if (label.color == ant.color) {
+            label.weight += 1024;
+        }
+        else if (this.air[Math.round(ant.pos.x)][Math.round(ant.pos.y)].weight > 1024) {
+            this.air[Math.round(ant.pos.x)][Math.round(ant.pos.y)].weight -= 1024;
+        }
+        else {
+            this.air[Math.round(ant.pos.x)][Math.round(ant.pos.y)].weight = 1024 - this.air[Math.round(ant.pos.x)][Math.round(ant.pos.y)].weight;
+            this.air[Math.round(ant.pos.x)][Math.round(ant.pos.y)].color = ant.color;
         }
     }
 
