@@ -21,25 +21,23 @@ class Ant {
         this.walk = true;
         this.labelTime = 5;
         this.flex = false;
-        this.decay = 100;
-        this.hunger = 100;
     }
 
     update() {
         this.timer--;
         this.life -= 1;
         if (this.timer <= 0) {
-            if (this.life < 0)
+            if (this.life < 0) {
                 this.action=Action.dead;
-            else {
-                this.pos = {
-                    x: Math.floor(this.pos.x),
-                    y: Math.floor(this.pos.y)
-                }
-                model.vision(this);
-                this.ai.select(this);
-                this.action(this);
+                this.dead();
             }
+            this.pos = {
+                x: Math.floor(this.pos.x),
+                y: Math.floor(this.pos.y)
+            }
+            model.vision(this);
+            this.ai.select(this);
+            this.action(this);
         }
         if (this.walk)
             this.goStep();
@@ -65,19 +63,6 @@ class Ant {
             this.labelTime = 5;
         }
         this.pose = !this.pose;
-    }
-
-    daed() {
-        if (this.decay <= 0) {
-            let food = new Food();
-            food.pos = {
-                x: this.pos.x,
-                y: this.pos.y
-            };
-            model.listFood.push(food);
-            model.map[food.pos.x][food.pos.y] = food;
-        } else
-            this.decay --;
     }
 
     draw(ctx, fw) { 
@@ -168,7 +153,7 @@ class Ant {
         if (control.info) {
             ctx.fillStyle='White';
             ctx.font = "8pt Arial";
-            ctx.fillText(this.action + " " + this.goal.name + " " + this.timer, x, y-20);
+            ctx.fillText(this.action.name + " " + this.goal.name + " " + this.timer, x, y-20);
             ctx.strokeRect(x-this.range, y-this.range, this.range*2, this.range*2);
         }
     }

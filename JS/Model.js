@@ -62,8 +62,6 @@ class Model {
 
     update() {
         for (let colony of this.listColony) {
-            for(let ant of colony.listAnt)
-                ant.update();
             colony.update();
         }
         let listLabel = [];
@@ -79,6 +77,7 @@ class Model {
     }
 
     vision(ant) {
+        ant.target = {pos: this.rndPos(ant.pos, ant.range)};
         this.sector = this.getSector(ant.pos, ant.range);
         for (let x = this.sector.left; x < this.sector.right; x++) {
             for (let y = this.sector.top; y < this.sector.bottom; y++) {

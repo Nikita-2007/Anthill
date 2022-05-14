@@ -22,17 +22,15 @@ class Action {
 
     static find(ant) {
         ant.goal = Food;
-        ant.timer = 20;
         ant.walk = true;
-        ant.target = {pos: model.rndPos(ant.pos, ant.range)};
         ant.angle = ant.getAngle(ant.pos, ant.target);
+        ant.timer = Math.round(model.delta(ant.pos, ant.target)/ant.speed);
     }
 
     static back(ant) {
         ant.goal = Colony;
-        ant.target = {pos: model.rndPos(ant.pos, ant.range)};
         ant.angle = ant.getAngle(ant.pos, ant.target);
-        ant.timer = 20;
+        ant.timer = Math.round(model.delta(ant.pos, ant.target)/ant.speed);
         ant.walk = true;
     }
 
@@ -61,15 +59,14 @@ class Action {
     }
 
     static dead(ant) {
+        ant.timer = 20;
         ant.walk = false;
         ant.color = 'Black';
         ant.life = 0;
-        ant.timer = 100;
         if (ant.load)
             ant.action = Action.drop;
         ant.target = ant.pos;
         ant.pos = ant.target;
-        ant.dead();
     }
 
     static drop(ant) {
