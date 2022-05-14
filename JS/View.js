@@ -14,9 +14,9 @@ class View {
     draw() {
         this.ctx.fillStyle = 'darkslategray';
         this.ctx.fillRect(0, 0, this.canvas.width, this.canvas.height);
-        for (let label of model.listLabel) {
-            label.draw(this.ctx)
-        }
+        if (control.label)
+            for (let label of model.listLabel)
+                label.draw(this.ctx);
         for (let food of model.listFood) {
             food.draw(this.ctx);
         }

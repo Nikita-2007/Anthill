@@ -52,13 +52,17 @@ class Block extends Items {
 }
 
 class Label {
-    constructor(ant) {
-        this.color = ant.color;
+    constructor(pos, color) {
+        this.color = color;
         this.pos = {
-            x: ant.pos.x,
-            y: ant.pos.y
+            x: pos.x,
+            y: pos.y
         };
-        this.weight = 1024;
+        this.weight = 128;
+    }
+
+    update() {
+        this.weight--;
     }
 
     draw(ctx) {

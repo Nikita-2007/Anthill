@@ -14,7 +14,7 @@ class PI {
             ant.action = Action.grab;
         else if (false)
             ant.action = Action.info;
-        else if (!ant.load) 
+        else if (!ant.load && false) 
             ant.action = Action.flex;
         else if (!ant.load)
             ant.action = Action.find;

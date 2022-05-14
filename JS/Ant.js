@@ -7,7 +7,7 @@ class Ant {
             x: colony.pos.x,
             y: colony.pos.y
         };
-        this.range = 50;
+        this.range = 60;
         this.target = {pos: model.rndPos(this.pos, this.range)};
         this.angle = this.getAngle(this.pos, this.target);
         this.action = Action.wait;
@@ -21,17 +21,20 @@ class Ant {
         this.walk = true;
         this.labelTime = 5;
         this.flex = false;
+        this.decay = 100;
+        this.hunger = 100;
     }
 
     update() {
         this.timer--;
+        this.life -= 1;
         if (this.timer <= 0) {
             if (this.life < 0)
                 this.action=Action.dead;
             else {
                 this.pos = {
-                    x: Math.round(this.pos.x),
-                    y: Math.round(this.pos.y)
+                    x: Math.floor(this.pos.x),
+                    y: Math.floor(this.pos.y)
                 }
                 model.vision(this);
                 this.ai.select(this);
@@ -44,24 +47,37 @@ class Ant {
 
     goStep() {
         let pos = {
-            x: Math.round(this.pos.x),
-            y: Math.round(this.pos.y)
+            x: Math.floor(this.pos.x),
+            y: Math.floor(this.pos.y)
         }
         model.map[pos.x][pos.y] = false;
         let angle = this.angle-Math.PI/2;
         this.pos.x += this.speed * Math.cos(angle);
         this.pos.y += this.speed * Math.sin(angle);
         pos = {
-            x: Math.round(this.pos.x),
-            y: Math.round(this.pos.y)
+            x: Math.floor(this.pos.x),
+            y: Math.floor(this.pos.y)
         }
         model.map[pos.x][pos.y] = this;
-        this.pose = !this.pose;
         this.labelTime--;
         if (this.labelTime <=0) {
-            model.newLabel(this);
+            model.newLabel(pos, this.color);
             this.labelTime = 5;
         }
+        this.pose = !this.pose;
+    }
+
+    daed() {
+        if (this.decay <= 0) {
+            let food = new Food();
+            food.pos = {
+                x: this.pos.x,
+                y: this.pos.y
+            };
+            model.listFood.push(food);
+            model.map[food.pos.x][food.pos.y] = food;
+        } else
+            this.decay --;
     }
 
     draw(ctx, fw) { 
@@ -151,8 +167,8 @@ class Ant {
 
         if (control.info) {
             ctx.fillStyle='White';
-            ctx.font = "8pt Arial"
-            ctx.fillText(this.action.name + " " + this.goal.name + " " + this.timer, x, y-20);
+            ctx.font = "8pt Arial";
+            ctx.fillText(this.action + " " + this.goal.name + " " + this.timer, x, y-20);
             ctx.strokeRect(x-this.range, y-this.range, this.range*2, this.range*2);
         }
     }

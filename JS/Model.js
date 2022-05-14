@@ -66,6 +66,16 @@ class Model {
                 ant.update();
             colony.update();
         }
+        let listLabel = [];
+        for (let label of this.listLabel) {
+            label.update();
+            if (label.weight <= 0) {
+                delete this.air[label.pos.x][label.pos.y];
+                this.air[label.pos.x][label.pos.y] = false;
+            } else
+                listLabel.push(label);
+        }
+        this.listLabel = listLabel;
     }
 
     vision(ant) {
@@ -80,24 +90,24 @@ class Model {
         }
     }
 
-    newLabel(ant) {
-        let label = new Label(ant);
-        if (!this.air[Math.round(ant.pos.x)][Math.round(ant.pos.y)]) {
+    newLabel(pos, color) {
+        let label = new Label(pos, color);
+        if (!this.air[Math.round(pos.x)][Math.round(pos.y)]) {
             this.listLabel.push(label);
-            this.air[Math.round(ant.pos.x)][Math.round(ant.pos.y)] = label;
+            this.air[Math.round(pos.x)][Math.round(pos.y)] = label;
         }
-        else if (label.color == ant.color) {
+        else if (label.color == color) {
             label.weight += 1024;
         }
-        else if (this.air[Math.round(ant.pos.x)][Math.round(ant.pos.y)].weight > 1024) {
-            this.air[Math.round(ant.pos.x)][Math.round(ant.pos.y)].weight -= 1024;
+        else if (this.air[Math.round(pos.x)][Math.round(pos.y)].weight > 1024) {
+            this.air[Math.round(pos.x)][Math.round(pos.y)].weight -= 1024;
         }
         else {
-            this.air[Math.round(ant.pos.x)][Math.round(ant.pos.y)].weight = 1024 - this.air[Math.round(ant.pos.x)][Math.round(ant.pos.y)].weight;
-            this.air[Math.round(ant.pos.x)][Math.round(ant.pos.y)].color = ant.color;
+            this.air[Math.round(pos.x)][Math.round(pos.y)].weight = 1024 - this.air[Math.round(pos.x)][Math.round(pos.y)].weight;
+            this.air[Math.round(pos.x)][Math.round(pos.y)].color = color;
         }
     }
-
+    
     rndPos(pos, range) {
         this.sector = this.getSector(pos, range);
         return {
@@ -108,10 +118,10 @@ class Model {
     
     getSector(pos, range) {
         return {
-            left: Math.max(0, pos.x-range),
-            right: Math.min(this.size.width, pos.x+range),
-            top: Math.max(0, pos.y-range),
-            bottom: Math.min(this.size.height, pos.y+range)}
+            left: Math.max(50, pos.x-range),
+            right: Math.min(this.size.width-50, pos.x+range),
+            top: Math.max(50, pos.y-range),
+            bottom: Math.min(this.size.height-50, pos.y+range)}
     }
 
     delta(pos, target) {
