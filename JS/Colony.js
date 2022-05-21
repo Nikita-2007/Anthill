@@ -18,7 +18,7 @@ class Colony {
         let listAnt = [];
         for(let ant of this.listAnt) {
             ant.update();
-            if (ant.life > 0)
+            if (ant.life > -100)
                 listAnt.push(ant)
             else {
                 let food = new Food();
@@ -26,7 +26,7 @@ class Colony {
                     x: Math.round(ant.pos.x),
                     y: Math.round(ant.pos.y)
                 };
-                food.weight = 100;
+                food.weight = 100+ant.load.weight;
                 model.listFood.push(food);
                 model.map[food.pos.x][food.pos.y] = food;
             }
@@ -36,6 +36,7 @@ class Colony {
             this.delay--;
             if (this.delay < 0) {
                 let ant = new Ant(this);
+                ant.pos.y = this.pos.y + 5;
                 this.listAnt.push(ant);
                 this.food -= 100;
                 this.delay = Math.round(this.timer/6,666666666666667);
@@ -44,12 +45,12 @@ class Colony {
     }
 
     draw(ctx) {
-        let grad = ctx.createRadialGradient(this.pos.x, this.pos.y, 8, this.pos.x, this.pos.y, 32);
-        grad.addColorStop(0, this.color);
+        let grad = ctx.createRadialGradient(this.pos.x, this.pos.y, 8, this.pos.x, this.pos.y, 40);
+        grad.addColorStop(0.25, this.color);
         grad.addColorStop(1, 'transparent');
         ctx.fillStyle=grad;
         ctx.beginPath();
-        ctx.arc(this.pos.x, this.pos.y, 32, 0, Math.PI*2);
+        ctx.arc(this.pos.x, this.pos.y, 40, 0, Math.PI*2);
         ctx.fill();
         ctx.closePath();
         if (control.info) {

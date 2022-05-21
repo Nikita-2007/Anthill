@@ -109,9 +109,18 @@ class Model {
     
     rndPos(pos, range) {
         this.sector = this.getSector(pos, range);
+        let collision = true; 
+        while (collision) {
+            pos = {
+                x: Math.round(Math.random() * (this.sector.right - this.sector.left)+this.sector.left),
+                y: Math.round(Math.random() * (this.sector.bottom - this.sector.top)+this.sector.top)
+            }
+            if (this.map[pos.x][pos.y] === false)
+                collision = false;
+        }
         return {
-            x: Math.round(Math.random() * (this.sector.right - this.sector.left)+this.sector.left),
-            y: Math.round(Math.random() * (this.sector.bottom - this.sector.top)+this.sector.top)
+            x: pos.x,
+            y: pos.y
         };
     }
     

@@ -25,11 +25,9 @@ class Ant {
 
     update() {
         this.timer--;
-        this.life -= 1;
         if (this.timer <= 0) {
             if (this.life < 0) {
                 this.action=Action.dead;
-                this.dead();
             }
             this.pos = {
                 x: Math.floor(this.pos.x),
