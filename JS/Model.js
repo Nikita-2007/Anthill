@@ -59,7 +59,7 @@ class Model {
             this.map[block.pos.x][block.pos.y] = block;
         }
     }
-
+    
     update() {
         for (let colony of this.listColony) {
             colony.update();
@@ -109,14 +109,13 @@ class Model {
     
     rndPos(pos, range) {
         this.sector = this.getSector(pos, range);
-        let collision = true; 
-        while (collision) {
+        while (this.map[pos.x][pos.y] === false) {
             pos = {
                 x: Math.round(Math.random() * (this.sector.right - this.sector.left)+this.sector.left),
                 y: Math.round(Math.random() * (this.sector.bottom - this.sector.top)+this.sector.top)
             }
-            if (this.map[pos.x][pos.y] === false)
-                collision = false;
+            if (this.map[pos.x][pos.y])
+                range = 4;
         }
         return {
             x: pos.x,

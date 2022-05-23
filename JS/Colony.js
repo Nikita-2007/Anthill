@@ -18,7 +18,7 @@ class Colony {
         let listAnt = [];
         for(let ant of this.listAnt) {
             ant.update();
-            if (ant.life > -100)
+            if (ant.life > -10)
                 listAnt.push(ant)
             else {
                 let food = new Food();
@@ -30,6 +30,18 @@ class Colony {
                 model.listFood.push(food);
                 model.map[food.pos.x][food.pos.y] = food;
             }
+        }
+        if (this.listAnt.length == 0 && this.food < 100 && this.food > 0) {
+            this.color = 'rgba(0,0,0,0.5)';
+            let food = new Food();
+            food.pos = {
+                x: Math.round(this.pos.x),
+                y: Math.round(this.pos.y)
+            };
+            food.weight = this.food;
+            this.food = 0;
+            model.listFood.push(food);
+            model.map[food.pos.x][food.pos.y] = food;
         }
         this.listAnt = listAnt;
         if (this.food > 100) {

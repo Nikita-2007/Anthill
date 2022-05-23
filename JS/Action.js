@@ -61,7 +61,7 @@ class Action {
     static dead(ant) {
         ant.timer = 20;
         ant.walk = false;
-        ant.color = 'Black';
+        ant.color = 'rgba(0,0,0,0.25)';
         if (ant.load)
             ant.action = Action.drop;
         ant.target = ant.pos;
