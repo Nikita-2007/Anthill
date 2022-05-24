@@ -46,7 +46,7 @@ class Action {
         ant.walk = false;
         let food = Math.min(ant.target.weight, ant.life/2);
         ant.target.weight -= food;
-        ant.load = model.newFood(ant.pos, food);
+        ant.load = new Food(ant.pos, food);
         ant.speed = 2.5;
         if (ant.target.weight <= 0)
             model.map[ant.target.pos.x][ant.target.pos.y] = false;
