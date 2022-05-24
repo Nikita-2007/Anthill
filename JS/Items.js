@@ -1,13 +1,13 @@
 //Симулятор муравейника
 
 class Items {
-    constructor() {
+    constructor(pos) {
         this.pos = {
-            x: Math.round(Math.random()*window.innerWidth),
-            y: Math.round(Math.random()*window.innerHeight)
+            x: pos.x,
+            y: pos.y
         };
-        this.color = 'White'
-        this.Pi2 = Math.PI*2
+        this.color = 'White';
+        this.Pi2 = Math.PI*2;
     }
 
 
@@ -21,10 +21,10 @@ class Items {
 }
 
 class Food extends Items {
-    constructor() {
-        super();
+    constructor(pos, weight) {
+        super(pos);
         this.color = 'Crimson'
-        this.weight = Math.round(Math.random() * 200 + 100);
+        this.weight = weight;
     }
 
     draw(ctx) {
@@ -38,15 +38,15 @@ class Food extends Items {
 }
 
 class Rock extends Items {
-    constructor() {
-        super();
+    constructor(pos) {
+        super(pos);
         this.color = 'DimGrey'
     }
 }
 
 class Block extends Items {
-    constructor() {
-        super();
+    constructor(pos) {
+        super(pos);
         this.color = 'Black'
     }
 }

@@ -21,34 +21,19 @@ class Colony {
             if (ant.life > -10)
                 listAnt.push(ant)
             else {
-                let food = new Food();
-                food.pos = {
-                    x: Math.round(ant.pos.x),
-                    y: Math.round(ant.pos.y)
-                };
-                food.weight = 100+ant.load.weight;
-                model.listFood.push(food);
-                model.map[food.pos.x][food.pos.y] = food;
+                model.newFood({x:Math.round(ant.pos.x), y :Math.round(ant.pos.y)}, 100+ant.load.weight);
             }
         }
         if (this.listAnt.length == 0 && this.food < 100 && this.food > 0) {
             this.color = 'rgba(0,0,0,0.5)';
-            let food = new Food();
-            food.pos = {
-                x: Math.round(this.pos.x),
-                y: Math.round(this.pos.y)
-            };
-            food.weight = this.food;
+            model.newFood(model.rndPos(this.pos, 4), this.food);
             this.food = 0;
-            model.listFood.push(food);
-            model.map[food.pos.x][food.pos.y] = food;
         }
         this.listAnt = listAnt;
         if (this.food > 100) {
             this.delay--;
             if (this.delay < 0) {
                 let ant = new Ant(this);
-                ant.pos.y = this.pos.y + 5;
                 this.listAnt.push(ant);
                 this.food -= 100;
                 this.delay = Math.round(this.timer/6,666666666666667);

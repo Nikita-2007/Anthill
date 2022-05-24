@@ -3,10 +3,7 @@
 class Ant {
     constructor(colony) {
         this.color = colony.color;
-        this.pos = {
-            x: colony.pos.x,
-            y: colony.pos.y
-        };
+        this.pos = model.rndPos(colony.pos, 4);
         this.range = 60;
         this.target = {pos: model.rndPos(this.pos, this.range)};
         this.angle = this.getAngle(this.pos, this.target);

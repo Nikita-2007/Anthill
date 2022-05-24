@@ -44,17 +44,15 @@ class Model {
             this.map[colony.pos.x][colony.pos.y] = colony;
         }
         for (let i = 0; i < this.numFood; i++) {
-            let food = new Food();
-            this.listFood.push(food);
-            this.map[food.pos.x][food.pos.y] = food;
+            this.newFood(this.rndPos());
         }
         for (let i = 0; i < this.numRock; i++) {
-            let rock = new Rock();
+            let rock = new Rock(this.rndPos());
             this.listRock.push(rock);
             this.map[rock.pos.x][rock.pos.y] = rock;
         }
         for (let i = 0; i < this.numBlock; i++) {
-            let block = new Block();
+            let block = new Block(this.rndPos());
             this.listBlock.push(block);
             this.map[block.pos.x][block.pos.y] = block;
         }
@@ -106,29 +104,32 @@ class Model {
             this.air[Math.round(pos.x)][Math.round(pos.y)].color = color;
         }
     }
+
+    newFood(pos, weight = Math.round(Math.random() * 200 + 100)) {
+        let food = new Food(pos, weight);
+        this.listFood.push(food);
+        this.map[food.pos.x][food.pos.y] = food;
+    }
     
-    rndPos(pos, range) {
+    rndPos(pos = {x: this.size.width/2, y: this.size.height/2}, range = Math.max(this.size.width, this.size.height)) {
+        pos.x = Math.round(pos.x);
+        pos.y = Math.round(pos.y);
         this.sector = this.getSector(pos, range);
-        while (this.map[pos.x][pos.y] === false) {
+        while (this.map[pos.x][pos.y] != false) {
             pos = {
                 x: Math.round(Math.random() * (this.sector.right - this.sector.left)+this.sector.left),
                 y: Math.round(Math.random() * (this.sector.bottom - this.sector.top)+this.sector.top)
             }
-            if (this.map[pos.x][pos.y])
-                range = 4;
         }
-        return {
-            x: pos.x,
-            y: pos.y
-        };
+        return pos;
     }
     
     getSector(pos, range) {
         return {
-            left: Math.max(50, pos.x-range),
-            right: Math.min(this.size.width-50, pos.x+range),
-            top: Math.max(50, pos.y-range),
-            bottom: Math.min(this.size.height-50, pos.y+range)}
+            left: Math.max(0, pos.x-range),
+            right: Math.min(this.size.width-1, pos.x+range),
+            top: Math.max(0, pos.y-range),
+            bottom: Math.min(this.size.height-1, pos.y+range)}
     }
 
     delta(pos, target) {
