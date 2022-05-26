@@ -39,12 +39,13 @@ class Model {
             }
         }
         for (let i = 0; i < this.base; i++) {
-            let colony = new Colony(this.food);
+            let colony = new Colony(this.food, this.rndPos());
             this.listColony.push(colony);
             this.map[colony.pos.x][colony.pos.y] = colony;
         }
-        for (let i = 0; i < this.numFood; i++) {
+        for (let i = 0; i < this.numFood/2; i++) {
             this.newFood(this.rndPos());
+            this.newFood(this.rndPos({x: this.size.width/2, y: this.size.height/2}, 100));
         }
         for (let i = 0; i < this.numRock; i++) {
             let rock = new Rock(this.rndPos());
@@ -74,26 +75,13 @@ class Model {
         this.listLabel = listLabel;
     }
 
-    vision(ant) {
-        ant.target = {pos: this.rndPos(ant.pos, ant.range)};
-        this.sector = this.getSector(ant.pos, ant.range);
-        for (let x = this.sector.left; x < this.sector.right; x++) {
-            for (let y = this.sector.top; y < this.sector.bottom; y++) {
-                if (this.map[x][y] instanceof ant.goal) {
-                    ant.target = this.map[x][y];
-                    break;
-                }
-            }
-        }
-    }
-
     newLabel(pos, color) {
         let label = new Label(pos, color);
         if (!this.air[Math.round(pos.x)][Math.round(pos.y)]) {
             this.listLabel.push(label);
             this.air[Math.round(pos.x)][Math.round(pos.y)] = label;
         }
-        else if (label.color == color) {
+        else if (label.color == color && label.weight < 8192) {
             label.weight += 1024;
         }
         else if (this.air[Math.round(pos.x)][Math.round(pos.y)].weight > 1024) {

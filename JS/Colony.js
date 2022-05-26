@@ -1,17 +1,17 @@
 //Симулятор муравейника
 
 class Colony {
-    constructor(food) {
+    constructor(food, pos) {
         this.food = food;
         this.color = ('#'+Math.floor(Math.random()*16777216).toString(16).padStart(6, '0'));
-        this.pos = {
-            x: Math.round(Math.random()*window.innerWidth),
-            y: Math.round(Math.random()*window.innerHeight)
-        };
         this.listAnt = [];
         this.timer = 100;
         this.delay = Math.round(this.timer/6,666666666666667);
         this.ai = new PI();
+        this.pos = {
+            x: pos.x,
+            y: pos.y
+        }
     }
 
     update() {
