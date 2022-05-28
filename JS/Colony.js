@@ -1,9 +1,13 @@
 //Симулятор муравейника
-
 class Colony {
-    constructor(food, pos) {
+    palet = [
+    'DarkKhaki',
+    'NavajoWhite',
+    'Grey',
+    'OliveDrab'];
+    constructor(food, pos, i) {
         this.food = food;
-        this.color = ('#'+Math.floor(Math.random()*16777216).toString(16).padStart(6, '0'));
+        this.color = this.getColor(i);
         this.listAnt = [];
         this.timer = 100;
         this.delay = Math.round(this.timer/6,666666666666667);
@@ -18,10 +22,11 @@ class Colony {
         let listAnt = [];
         for(let ant of this.listAnt) {
             ant.update();
+            ant.pos = model.intPos(ant.pos);
             if (ant.life > -10)
                 listAnt.push(ant)
             else {
-                model.newFood({x:Math.round(ant.pos.x), y :Math.round(ant.pos.y)}, 100+ant.load.weight);
+                model.newFood({x:ant.pos.x, y :ant.pos.y}, 100+ant.load.weight);
             }
         }
         if (this.listAnt.length == 0 && this.food < 100 && this.food > 0) {
@@ -55,5 +60,12 @@ class Colony {
             ctx.font = "8pt Arial"
             ctx.fillText(this.listAnt.length, this.pos.x, this.pos.y);
         }
+    }
+
+    getColor(i) {
+        if (i < this.palet.length)
+            return this.palet[i];
+        else
+            return ('#'+Math.floor(Math.random()*16777216).toString(16).padStart(6, '0'));
     }
 }

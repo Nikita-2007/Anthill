@@ -6,7 +6,7 @@ class Model {
             width: window.innerWidth,
             height: window.innerHeight
         };
-        this.base = 3;
+        this.base = 4;
         this.food = 256;
         this.numFood = 256;
         this.numRock = 212;
@@ -29,6 +29,15 @@ class Model {
         this.init();
     }
 
+/*
+Номер                                   Задание                                           Статус
+  1.    Очки опыта.                                                                      СДЕЛАНО
+  2.    Внести изменение так чтобы колонии спавнелись с заранее создаными цветами (3-4). СДЕЛАНО
+  3.    Разширить функцию model.newLabel() а ну да в принципе уже сделано.               СДЕЛАНО
+  4.    При создание корма в 1 месте они создавались рядом.                              СДЕЛАНО
+  5.    Функция для округления позиции.                                                  СДЕЛАНО
+*/
+
     init() {
         for (let x = 0; x < this.size.width; x++) {
             this.map[x] = [];
@@ -39,7 +48,7 @@ class Model {
             }
         }
         for (let i = 0; i < this.base; i++) {
-            let colony = new Colony(this.food, this.rndPos());
+            let colony = new Colony(this.food, this.rndPos(), i);
             this.listColony.push(colony);
             this.map[colony.pos.x][colony.pos.y] = colony;
         }
@@ -77,19 +86,20 @@ class Model {
 
     newLabel(pos, color) {
         let label = new Label(pos, color);
-        if (!this.air[Math.round(pos.x)][Math.round(pos.y)]) {
+        pos = this.intPos(pos);
+        if (!this.air[pos.x][pos.y]) {
             this.listLabel.push(label);
-            this.air[Math.round(pos.x)][Math.round(pos.y)] = label;
+            this.air[pos.x][pos.y] = label;
         }
         else if (label.color == color && label.weight < 8192) {
             label.weight += 1024;
         }
-        else if (this.air[Math.round(pos.x)][Math.round(pos.y)].weight > 1024) {
-            this.air[Math.round(pos.x)][Math.round(pos.y)].weight -= 1024;
+        else if (this.air[pos.x][pos.y].weight > 1024) {
+            this.air[pos.x][pos.y].weight -= 1024;
         }
         else {
-            this.air[Math.round(pos.x)][Math.round(pos.y)].weight = 1024 - this.air[Math.round(pos.x)][Math.round(pos.y)].weight;
-            this.air[Math.round(pos.x)][Math.round(pos.y)].color = color;
+            this.air[pos.x][pos.y].weight = 1024 - this.air[pos.x][pos.y].weight;
+            this.air[pos.x][pos.y].color = color;
         }
     }
 
@@ -100,16 +110,23 @@ class Model {
     }
     
     rndPos(pos = {x: this.size.width/2, y: this.size.height/2}, range = Math.max(this.size.width, this.size.height)) {
-        pos.x = Math.round(pos.x);
-        pos.y = Math.round(pos.y);
         this.sector = this.getSector(pos, range);
+        pos = this.intPos(pos);
         while (this.map[pos.x][pos.y] != false) {
             pos = {
-                x: Math.round(Math.random() * (this.sector.right - this.sector.left)+this.sector.left),
-                y: Math.round(Math.random() * (this.sector.bottom - this.sector.top)+this.sector.top)
+                x: Math.random() * (this.sector.right - this.sector.left)+this.sector.left,
+                y: Math.random() * (this.sector.bottom - this.sector.top)+this.sector.top
             }
+            pos = this.intPos(pos);
         }
         return pos;
+    }
+
+    intPos(pos) {
+        return {
+            x: Math.round(pos.x),
+            y: Math.round(pos.y),
+        }
     }
     
     getSector(pos, range) {

@@ -21,6 +21,7 @@ class Action {
     }
 
     static find(ant) {
+        ant.score += 1;
         ant.goal = Food;
         ant.walk = true;
         ant.angle = ant.getAngle(ant.pos, ant.target);
@@ -28,6 +29,7 @@ class Action {
     }
 
     static back(ant) {
+        ant.score += 1;
         ant.goal = Colony;
         ant.angle = ant.getAngle(ant.pos, ant.target);
         ant.timer = Math.round(model.delta(ant.pos, ant.target)/ant.speed);
@@ -35,12 +37,14 @@ class Action {
     }
 
     static move(ant) {
+        ant.score += 1  ;
         ant.timer = Math.round(model.delta(ant.pos, ant.target)/ant.speed-10);
         ant.angle = ant.getAngle(ant.pos, ant.target);
         ant.walk = true;
     }
 
     static grab(ant) {
+        ant.score += 5;
         ant.goal = Colony;
         ant.timer = 5;
         ant.walk = false;
@@ -53,6 +57,7 @@ class Action {
     }
 
     static kick(ant) {
+        ant.score += 10;
         ant.timer = 5;
         ant.walk = false;
     }
@@ -68,14 +73,16 @@ class Action {
     }
 
     static drop(ant) {
+        ant.score += 20;
         ant.timer = 5;
         ant.walk = false;
         ant.target.food += ant.load.weight;
         ant.load = false;
-        ant.speed = 4
+        ant.speed = 4;
     }
 
     static info(ant) {
+        ant.score += 15;
         ant.timer = 20;
         ant.walk = false;
     }

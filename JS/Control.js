@@ -27,8 +27,12 @@ class Control {
     }
 
     onClick(e) {
-        if (!this.focus)
-            model.newFood({x: e.clientX, y: e.clientY});
+        if (!this.focus) {
+            let pos = {x: e.clientX, y: e.clientY}
+            if (model.map[pos.x][pos.y])
+                pos = model.rndPos(pos, 4)
+            model.newFood({x: pos.x, y: pos.y});
+        }
         this.focus = false;
     }
 

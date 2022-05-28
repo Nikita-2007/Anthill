@@ -18,6 +18,7 @@ class Ant {
         this.walk = true;
         this.labelTime = 5;
         this.flex = false;
+        this.score = 0
     }
 
     update() {
@@ -26,10 +27,7 @@ class Ant {
             if (this.life < 0) {
                 this.action=Action.dead;
             }
-            this.pos = {
-                x: Math.floor(this.pos.x),
-                y: Math.floor(this.pos.y)
-            }
+            this.pos = model.intPos(this.pos);
             this.vision();
             this.ai.select(this);
             this.action(this);
@@ -39,19 +37,13 @@ class Ant {
     }
 
     goStep() {
-        let pos = {
-            x: Math.floor(this.pos.x),
-            y: Math.floor(this.pos.y)
-        }
+        let pos = model.intPos(this.pos);
         model.map[pos.x][pos.y] = false;
         let angle = this.angle-Math.PI/2;
         this.pos.x += this.speed * Math.cos(angle);
         this.pos.y += this.speed * Math.sin(angle);
         this.pos = model.rndPos(this.pos, 2);
-        pos = {
-            x: Math.floor(this.pos.x),
-            y: Math.floor(this.pos.y)
-        }
+        pos = model.intPos(this.pos);
         model.map[pos.x][pos.y] = this;
         this.labelTime--;
         if (this.labelTime <=0) {
@@ -149,7 +141,7 @@ class Ant {
         if (control.info) {
             ctx.fillStyle='White';
             ctx.font = "8pt Arial";
-            ctx.fillText(this.action.name + " " + this.life + " " + this.timer, x, y-20);
+            ctx.fillText(this.action.name + " " + this.life + " " + this.score, x, y-20);
             ctx.strokeRect(x-this.range, y-this.range, this.range*2, this.range*2);
         }
     }
