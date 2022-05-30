@@ -1,6 +1,7 @@
 //Симулятор муравейника
 
 class View {
+    //Конструктор
     constructor() {
         this.canvas = document.getElementById('canvas');
         this.canvas.width = model.size.width;
@@ -11,6 +12,7 @@ class View {
         this.fw = new FlyWeidth();
     }
 
+    //Отрисовка
     draw() {
         this.ctx.fillStyle = 'darkslategray';
         this.ctx.fillRect(0, 0, this.canvas.width, this.canvas.height);

@@ -1,7 +1,7 @@
 //Симулятор муравейника
 
 class Action {
-
+    //Список действий
     static listAction = [
         Action.wait,
         Action.find,
@@ -15,11 +15,13 @@ class Action {
         Action.flex
     ];
 
+    //Ожидание
     static wait(ant) {
         ant.timer = 20;
         ant.walk = false;
     }
 
+    //Поиск
     static find(ant) {
         ant.score += 1;
         ant.goal = Food;
@@ -28,6 +30,7 @@ class Action {
         ant.timer = Math.round(model.delta(ant.pos, ant.target)/ant.speed);
     }
 
+    //Возврат
     static back(ant) {
         ant.score += 1;
         ant.goal = Colony;
@@ -36,6 +39,7 @@ class Action {
         ant.walk = true;
     }
 
+    //Спортивная ходьба
     static move(ant) {
         ant.score += 1  ;
         ant.timer = Math.round(model.delta(ant.pos, ant.target)/ant.speed-10);
@@ -43,6 +47,7 @@ class Action {
         ant.walk = true;
     }
 
+    //Поднятие
     static grab(ant) {
         ant.score += 5;
         ant.goal = Colony;
@@ -53,15 +58,17 @@ class Action {
         ant.load = new Food(ant.pos, food);
         ant.speed = 2.5;
         if (ant.target.weight <= 0)
-            model.map[ant.target.pos.x][ant.target.pos.y] = false;
+            model.delFood();
     }
 
+    //Удар
     static kick(ant) {
         ant.score += 10;
         ant.timer = 5;
         ant.walk = false;
     }
 
+    //Смерть
     static dead(ant) {
         ant.timer = 20;
         ant.walk = false;
@@ -72,6 +79,7 @@ class Action {
         ant.pos = ant.target;
     }
 
+    //Выброс
     static drop(ant) {
         ant.score += 20;
         ant.timer = 5;
@@ -81,12 +89,14 @@ class Action {
         ant.speed = 4;
     }
 
+    //Учение
     static info(ant) {
         ant.score += 15;
         ant.timer = 20;
         ant.walk = false;
     }
 
+    //Нереальный жёсткий экстремальный экслюзивный эпический огненый сногсшабательынй танец
     static flex(ant) {
         ant.timer = 50;
         ant.walk = false;

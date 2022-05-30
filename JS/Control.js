@@ -1,6 +1,7 @@
 //Симулятор муравейника
 
 class Control {
+    //Конструктор
     constructor() {
         this.fps = 128;
         this.play = false;
@@ -20,12 +21,14 @@ class Control {
         onkeydown = (e) => this.onKeyDown(e);
     }
 
+    //Обновление
     update() {
         if (this.play == false)
             model.update();
         view.draw();
     }
 
+    //Отлавливание кликка
     onClick(e) {
         if (!this.focus) {
             let pos = {x: e.clientX, y: e.clientY}
@@ -36,6 +39,7 @@ class Control {
         this.focus = false;
     }
 
+    //Отлавливание кнопок
     onKeyDown(e) {
         if (e.keyCode == 17)
             this.info = !this.info;
@@ -43,23 +47,27 @@ class Control {
             this.label = !this.label;
     }
 
+    //Кнопка "Game"
     Game() {
         this.focus = true;
         this.btnName();
         this.play = !this.play;
     }
 
+    //Кнопка "Save"
     Save() {
         this.focus = true;
         this.btnName();
     }
 
+    //Кнопка "Clear"
     Clear() {
         this.focus = true;
         this.btnName()
         model = new Model();
     }
 
+    //Пуск/Пуск
     btnName() {
         if (!this.play)
             this.btnPlay.innerHTML='<i class="fa fa-play" aria-hidden="true"></i>';

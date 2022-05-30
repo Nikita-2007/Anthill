@@ -5,6 +5,8 @@ class Colony {
     'NavajoWhite',
     'Grey',
     'OliveDrab'];
+
+    //Конструктор
     constructor(food, pos, i) {
         this.food = food;
         this.color = this.getColor(i);
@@ -18,6 +20,7 @@ class Colony {
         }
     }
 
+    //Обновление
     update() {
         let listAnt = [];
         for(let ant of this.listAnt) {
@@ -46,6 +49,7 @@ class Colony {
         }
     }
 
+    //Отрисовка
     draw(ctx) {
         let grad = ctx.createRadialGradient(this.pos.x, this.pos.y, 8, this.pos.x, this.pos.y, 40);
         grad.addColorStop(0.25, this.color);
@@ -61,7 +65,7 @@ class Colony {
             ctx.fillText(this.listAnt.length, this.pos.x, this.pos.y);
         }
     }
-
+    //Выбор цвета
     getColor(i) {
         if (i < this.palet.length)
             return this.palet[i];

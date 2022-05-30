@@ -1,12 +1,13 @@
 //Симулятор муравейника
 
 class Model {
+    //Конструктор
     constructor() {
         this.size = {
             width: window.innerWidth,
             height: window.innerHeight
         };
-        this.base = 4;
+        this.base = 3;
         this.food = 256;
         this.numFood = 256;
         this.numRock = 212;
@@ -29,15 +30,7 @@ class Model {
         this.init();
     }
 
-/*
-Номер                                   Задание                                           Статус
-  1.    Очки опыта.                                                                      СДЕЛАНО
-  2.    Внести изменение так чтобы колонии спавнелись с заранее создаными цветами (3-4). СДЕЛАНО
-  3.    Разширить функцию model.newLabel() а ну да в принципе уже сделано.               СДЕЛАНО
-  4.    При создание корма в 1 месте они создавались рядом.                              СДЕЛАНО
-  5.    Функция для округления позиции.                                                  СДЕЛАНО
-*/
-
+    //Добовление на карту
     init() {
         for (let x = 0; x < this.size.width; x++) {
             this.map[x] = [];
@@ -48,7 +41,12 @@ class Model {
             }
         }
         for (let i = 0; i < this.base; i++) {
-            let colony = new Colony(this.food, this.rndPos(), i);
+            let segment = 2*Math.PI/this.base*i+-Math.PI/2 + Math.PI/this.base*((this.base+1)%2);
+            let radius = (this.base - 1)*(Math.min(this.size.width, this.size.height)/2/this.base);
+            let colony = new Colony(this.food, {
+                x: Math.round(this.size.width/2+radius*Math.cos(segment)),
+                y: Math.round(this.size.height/2+radius*Math.sin(segment))
+            }, i);
             this.listColony.push(colony);
             this.map[colony.pos.x][colony.pos.y] = colony;
         }
@@ -68,10 +66,12 @@ class Model {
         }
     }
     
+    //Обновление
     update() {
         for (let colony of this.listColony) {
             colony.update();
         }
+
         let listLabel = [];
         for (let label of this.listLabel) {
             label.update();
@@ -84,6 +84,7 @@ class Model {
         this.listLabel = listLabel;
     }
 
+    //Создание метки
     newLabel(pos, color) {
         let label = new Label(pos, color);
         pos = this.intPos(pos);
@@ -103,12 +104,25 @@ class Model {
         }
     }
 
+    //Создание еды
     newFood(pos, weight = Math.round(Math.random() * 200 + 100)) {
         let food = new Food(pos, weight);
         this.listFood.push(food);
         this.map[food.pos.x][food.pos.y] = food;
     }
-    
+
+    //Удаление еды
+    delFood() {
+        let listFood = [];
+        for (let food of this.listFood)
+            if (food.weight > 0) 
+                listFood.push(food);
+            else
+                this.map[food.pos.x][food.pos.y] = false;
+        this.listFood = listFood;
+    }
+
+    //Выбор случайной позиции
     rndPos(pos = {x: this.size.width/2, y: this.size.height/2}, range = Math.max(this.size.width, this.size.height)) {
         this.sector = this.getSector(pos, range);
         pos = this.intPos(pos);
@@ -122,6 +136,7 @@ class Model {
         return pos;
     }
 
+    //Округление координат
     intPos(pos) {
         return {
             x: Math.round(pos.x),
@@ -129,6 +144,7 @@ class Model {
         }
     }
     
+    //Проверка на края  карты
     getSector(pos, range) {
         return {
             left: Math.max(0, pos.x-range),
@@ -136,7 +152,7 @@ class Model {
             top: Math.max(0, pos.y-range),
             bottom: Math.min(this.size.height-1, pos.y+range)}
     }
-
+    //Длинна до цели
     delta(pos, target) {
         return Math.sqrt(Math.pow(pos.x - target.pos.x, 2) + Math.pow(pos.y - target.pos.y, 2)); 
     }

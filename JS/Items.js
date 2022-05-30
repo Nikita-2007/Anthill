@@ -1,6 +1,7 @@
 //Симулятор муравейника
 
 class Items {
+    //Конструктор
     constructor(pos) {
         this.pos = {
             x: pos.x,
@@ -10,7 +11,7 @@ class Items {
         this.Pi2 = Math.PI*2;
     }
 
-
+    //Отрисовка
     draw(ctx) {
         ctx.fillStyle = this.color;
         ctx.beginPath();
@@ -21,12 +22,13 @@ class Items {
 }
 
 class Food extends Items {
+    //Конструктор
     constructor(pos, weight) {
         super(pos);
         this.color = 'Crimson'
         this.weight = weight;
     }
-
+    //Отрисовка
     draw(ctx) {
         super.draw(ctx);
         if (control.info) {
@@ -38,6 +40,7 @@ class Food extends Items {
 }
 
 class Rock extends Items {
+    //Конструктор
     constructor(pos) {
         super(pos);
         this.color = 'DimGrey'
@@ -45,6 +48,7 @@ class Rock extends Items {
 }
 
 class Block extends Items {
+    //Конструктор
     constructor(pos) {
         super(pos);
         this.color = 'Black'
@@ -52,6 +56,7 @@ class Block extends Items {
 }
 
 class Label {
+    //Конструктор
     constructor(pos, color) {
         this.color = color;
         this.pos = {
@@ -61,10 +66,11 @@ class Label {
         this.weight = 1024;
     }
 
+    //Обновление
     update() {
         this.weight--;
     }
-
+    //Отрисовка
     draw(ctx) {
         ctx.beginPath();
         ctx.fillStyle = this.color;

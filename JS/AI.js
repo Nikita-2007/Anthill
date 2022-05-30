@@ -1,6 +1,7 @@
 //Симулятор муравейника
 
 class PI {
+    //Выбор действия
     select(ant) {
         if (ant.life <= 0)
             ant.action = Action.dead;
@@ -24,6 +25,7 @@ class PI {
 }
 
 class AI {
+    //Выбор действия
     select(ant) {
         ant.action = Action.listAction[Math.floor(Action.listAction.length*Math.random())];
     }

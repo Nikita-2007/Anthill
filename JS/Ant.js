@@ -1,6 +1,7 @@
 //Симулятор муравейника
 
 class Ant {
+    //Конструктор
     constructor(colony) {
         this.color = colony.color;
         this.pos = model.rndPos(colony.pos, 4);
@@ -21,6 +22,7 @@ class Ant {
         this.score = 0
     }
 
+    //Обновление
     update() {
         this.timer--;
         if (this.timer <= 0) {
@@ -36,6 +38,7 @@ class Ant {
             this.goStep();
     }
 
+    //Шаг
     goStep() {
         let pos = model.intPos(this.pos);
         model.map[pos.x][pos.y] = false;
@@ -53,6 +56,7 @@ class Ant {
         this.pose = !this.pose;
     }
 
+    //Отрисовка
     draw(ctx, fw) { 
         let x = this.pos.x;
         let y = this.pos.y;
@@ -146,6 +150,7 @@ class Ant {
         }
     }
 
+    //Обзор
     vision() {
         this.target = {pos: model.rndPos(this.pos, this.range)};
         model.sector = model.getSector(this.pos, this.range);
@@ -166,6 +171,7 @@ class Ant {
 }
 
 class FlyWeidth {
+    //Конструктор
     constructor() {
         this.size = 1;
         this.size5 = this.size;
