@@ -12,14 +12,14 @@ class Ant {
         this.timer = 0;
         this.pose = false;
         this.ai = colony.ai;
-        this.goal = constructor;
         this.speed = 4;
         this.life = 100;
         this.load = false;
         this.walk = true;
         this.labelTime = 5;
         this.flex = false;
-        this.score = 0
+        this.score = 0;
+        this.listTarget = this.vision();
     }
 
     //Обновление
@@ -50,7 +50,10 @@ class Ant {
         model.map[pos.x][pos.y] = this;
         this.labelTime--;
         if (this.labelTime <=0) {
-            model.newLabel(pos, this.color);
+            if (this.pose)
+                model.newLabel(pos, this.color);
+            else if (this.load instanceof Food)
+                model.newLabel(pos, Food.color);
             this.labelTime = 5;
         }
         this.pose = !this.pose;
@@ -152,43 +155,39 @@ class Ant {
 
     //Обзор
     vision() {
-        this.target = {pos: model.rndPos(this.pos, this.range)};
-        model.sector = model.getSector(this.pos, this.range);
-        for (let x = model.sector.left; x < model.sector.right; x++) {
-            for (let y = model.sector.top; y < model.sector.bottom; y++) {
-                if (model.map[x][y] instanceof this.goal) {
-                    this.target = model.map[x][y];
-                    break;
-                }
+        this.listTarget = {
+            colony: false,
+            ally : false,
+            alian: false,
+            food: false,
+            rock: false,
+            labFood: false,
+            laAant: false,
+            random: false
+        }
+        //this.pos = model.intPos(this.pos);
+        for (let i = 1; i <= this.range; i++) {
+            let sector = model.getSector(this.pos, i)
+            for (let j = sector.left; j <= sector.right; j++) {
+                this.memory(model.map[j][sector.top]);
+                this.memory(model.map[j][sector.botton]);
+            }
+            for (let j = sector.top+1; j <= sector.botton-1; j++) {
+                this.memory(model.map[sector.left][j]);
+                this.memory(model.map[sector.right][j]);
             }
         }
+        this.listTarget.random = model.rndPos(this.pos, this.range);
+        return this.listTarget;
+    }
+
+    //Запоминание объектов
+    memory(point) {
+
     }
 
     //Расчёт угла
     getAngle(pos, target) {
         return Math.atan2(pos.y - target.pos.y, pos.x - target.pos.x) - Math.PI/2;
-    }
-}
-
-class FlyWeidth {
-    //Конструктор
-    constructor() {
-        this.size = 1;
-        this.size5 = this.size;
-        this.size10 = this.size*2;
-        this.size15 = this.size*3;
-        this.size18 = this.size*3.6;
-        this.size20 = this.size*4;
-        this.size25 = this.size*5.6;
-        this.size28 = this.size*5.6;
-        this.size30 = this.size*6;
-        this.size32 = this.size*6.4;
-        this.size40 = this.size*8;
-        this.size45 = this.size*9;
-        this.size50 = this.size*10;
-        this.size55 = this.size*11;
-        this.size65 = this.size*13;
-        this.size100 = this.size*20;
-
     }
 }

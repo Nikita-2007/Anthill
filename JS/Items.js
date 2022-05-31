@@ -22,10 +22,12 @@ class Items {
 }
 
 class Food extends Items {
+    static color = 'Crimson';
+
     //Конструктор
     constructor(pos, weight) {
         super(pos);
-        this.color = 'Crimson'
+        this.color = Food.color;
         this.weight = weight;
     }
     //Отрисовка

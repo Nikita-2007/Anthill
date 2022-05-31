@@ -36,3 +36,26 @@ class View {
         }
     }
 }
+
+class FlyWeidth {
+    //Конструктор
+    constructor() {
+        this.size = 1;
+        this.size5 = this.size;
+        this.size10 = this.size*2;
+        this.size15 = this.size*3;
+        this.size18 = this.size*3.6;
+        this.size20 = this.size*4;
+        this.size25 = this.size*5.6;
+        this.size28 = this.size*5.6;
+        this.size30 = this.size*6;
+        this.size32 = this.size*6.4;
+        this.size40 = this.size*8;
+        this.size45 = this.size*9;
+        this.size50 = this.size*10;
+        this.size55 = this.size*11;
+        this.size65 = this.size*13;
+        this.size100 = this.size*20;
+
+    }
+}
