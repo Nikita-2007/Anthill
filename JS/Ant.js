@@ -148,7 +148,7 @@ class Ant {
         if (control.info) {
             ctx.fillStyle='White';
             ctx.font = "8pt Arial";
-            ctx.fillText(this.action.name + " " + this.life + " " + this.score, x, y-20);
+            ctx.fillText(this.action.name + " " + this.timer + " " + this.score, x, y-20);
             ctx.strokeRect(x-this.range, y-this.range, this.range*2, this.range*2);
         }
     }
@@ -158,12 +158,12 @@ class Ant {
         this.listTarget = {
             colony: false,
             ally : false,
-            alian: false,
+            alien: false,
             food: false,
             rock: false,
             labFood: false,
-            laAant: false,
-            random: false
+            labAnt: false,
+            random: {pos: model.rndPos(this.pos, this.range)}
         }
         //this.pos = model.intPos(this.pos);
         for (let i = 1; i <= this.range; i++) {
@@ -177,13 +177,21 @@ class Ant {
                 this.memory(model.map[sector.right][j]);
             }
         }
-        this.listTarget.random = model.rndPos(this.pos, this.range);
         return this.listTarget;
     }
 
     //Запоминание объектов
     memory(point) {
-
+        if (point instanceof Colony && point.color == this.color)
+            this.listTarget.colony = point;
+        else if (point instanceof Ant && point.color == this.color)
+            this.listTarget.ally = point;
+        else if (point instanceof Ant && point.load instanceof Food)
+            this.listTarget.alien = point;
+        else if (point instanceof Food)
+            this.listTarget.food = point;
+        else if (point instanceof Rock)
+            this.listTarget.rock = point;
     }
 
     //Расчёт угла

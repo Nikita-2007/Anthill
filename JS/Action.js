@@ -23,8 +23,13 @@ class Action {
 
     //Поиск
     static find(ant) {
+        if (ant.listTarget.food)
+            ant.target = ant.listTarget.food;
+        else if (ant.listTarget.alien)
+            ant.target = ant.listTarget.alien;
+        else
+            ant.target = ant.listTarget.random;
         ant.score += 1;
-        ant.goal = Food;
         ant.walk = true;
         ant.angle = ant.getAngle(ant.pos, ant.target);
         ant.timer = Math.round(model.delta(ant.pos, ant.target)/ant.speed);
@@ -32,8 +37,11 @@ class Action {
 
     //Возврат
     static back(ant) {
+        if (ant.listTarget.colony)
+            ant.target = ant.listTarget.colony;
+        else
+            ant.target = ant.listTarget.random;
         ant.score += 1;
-        ant.goal = Colony;
         ant.angle = ant.getAngle(ant.pos, ant.target);
         ant.timer = Math.round(model.delta(ant.pos, ant.target)/ant.speed);
         ant.walk = true;
@@ -41,7 +49,7 @@ class Action {
 
     //Спортивная ходьба
     static move(ant) {
-        ant.score += 1  ;
+        ant.score += 1 ;
         ant.timer = Math.round(model.delta(ant.pos, ant.target)/ant.speed-10);
         ant.angle = ant.getAngle(ant.pos, ant.target);
         ant.walk = true;
@@ -50,7 +58,6 @@ class Action {
     //Поднятие
     static grab(ant) {
         ant.score += 5;
-        ant.goal = Colony;
         ant.timer = 5;
         ant.walk = false;
         let food = Math.min(ant.target.weight, ant.life/2);
