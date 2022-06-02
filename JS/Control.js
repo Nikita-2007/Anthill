@@ -34,7 +34,7 @@ class Control {
             let pos = {x: e.clientX, y: e.clientY}
             if (model.map[pos.x][pos.y])
                 pos = model.rndPos(pos, 4)
-            model.newFood({x: pos.x, y: pos.y});
+            model.newFood({x: pos.x, y: pos.y}, 50);
         }
         this.focus = false;
     }
@@ -58,6 +58,7 @@ class Control {
     Save() {
         this.focus = true;
         this.btnName();
+        this.saveStaticDataToFile();
     }
 
     //Кнопка "Clear"
@@ -73,5 +74,12 @@ class Control {
             this.btnPlay.innerHTML='<i class="fa fa-play" aria-hidden="true"></i>';
         else
             this.btnPlay.innerHTML='<i class="fa fa-pause" aria-hidden="true"></i>';
+    }
+
+    saveStaticDataToFile() {
+        var blob = new Blob(["My first txt file."],
+            { type: "text/plain;charset=utf-8" });
+        saveAs(blob, "static.txt");
+        console.log(123);
     }
 }

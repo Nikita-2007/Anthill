@@ -47,14 +47,6 @@ class Action {
         ant.walk = true;
     }
 
-    //Спортивная ходьба
-    static move(ant) {
-        ant.score += 1 ;
-        ant.timer = Math.round(model.delta(ant.pos, ant.target)/ant.speed-10);
-        ant.angle = ant.getAngle(ant.pos, ant.target);
-        ant.walk = true;
-    }
-
     //Поднятие
     static grab(ant) {
         ant.score += 5;
@@ -70,9 +62,18 @@ class Action {
 
     //Удар
     static kick(ant) {
+        ant.target = ant.listTarget.alien;
         ant.score += 10;
         ant.timer = 5;
         ant.walk = false;
+        if (model.delta(ant.pos, ant.target) < 5) {
+            ant.target.life -= 20;
+            console.log(ant.target.life);
+            ant.target = false;
+        }
+        else {
+            ant.action = Action.wait;
+        }
     }
 
     //Смерть

@@ -7,9 +7,9 @@ class Model {
             width: window.innerWidth,
             height: window.innerHeight
         };
-        this.base = 3;
+        this.base = 10;
         this.food = 256;
-        this.numFood = 256;
+        this.numFood = 0;
         this.numRock = 212;
         this.numBlock = 128;
         
@@ -144,7 +144,7 @@ class Model {
         }
     }
     
-    //Проверка на края  карты
+    //Проверка на края карты
     getSector(pos, range) {
         return {
             left: Math.max(0, pos.x-range),
