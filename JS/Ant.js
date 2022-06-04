@@ -5,21 +5,26 @@ class Ant {
     constructor(colony) {
         this.color = colony.color;
         this.pos = model.rndPos(colony.pos, 4);
+        this.action = Action.wait;
+        this.ai = colony.ai;
+        this.life = 100;
         this.range = 60;
         this.target = {pos: model.rndPos(this.pos, this.range)};
         this.angle = this.getAngle(this.pos, this.target);
-        this.action = Action.wait;
         this.timer = 0;
         this.pose = false;
-        this.ai = colony.ai;
         this.speed = 4;
-        this.life = 100;
         this.load = false;
         this.walk = true;
         this.labelTime = 5;
         this.flex = false;
         this.score = 0;
         this.listTarget = this.vision();
+        this.nn = [
+            [],
+            [],
+            []
+        ];
     }
 
     //Обновление

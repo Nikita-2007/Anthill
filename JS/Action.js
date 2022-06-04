@@ -9,10 +9,10 @@ class Action {
         Action.move,
         Action.grab,
         Action.kick,
-        Action.dead,
         Action.drop,
         Action.info,
-        Action.flex
+        Action.flex,
+        Action.dead
     ];
 
     //Ожидание

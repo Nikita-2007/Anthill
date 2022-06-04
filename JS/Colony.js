@@ -13,7 +13,7 @@ class Colony {
         this.listAnt = [];
         this.timer = 100;
         this.delay = Math.round(this.timer/6,666666666666667);
-        this.ai = new PI();
+        this.ai = new AI();
         this.pos = {
             x: pos.x,
             y: pos.y

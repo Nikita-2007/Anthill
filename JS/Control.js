@@ -57,8 +57,15 @@ class Control {
     //Кнопка "Save"
     Save() {
         this.focus = true;
+        this.play = false;
         this.btnName();
-        this.saveStaticDataToFile();
+        var blob = new Blob(["My first txt file."],
+            { type: "text/plain;charset=utf-8" });
+        saveAs(blob, "static.txt");
+    }
+
+    Load() {
+        ;
     }
 
     //Кнопка "Clear"
@@ -74,12 +81,5 @@ class Control {
             this.btnPlay.innerHTML='<i class="fa fa-play" aria-hidden="true"></i>';
         else
             this.btnPlay.innerHTML='<i class="fa fa-pause" aria-hidden="true"></i>';
-    }
-
-    saveStaticDataToFile() {
-        var blob = new Blob(["My first txt file."],
-            { type: "text/plain;charset=utf-8" });
-        saveAs(blob, "static.txt");
-        console.log(123);
     }
 }
