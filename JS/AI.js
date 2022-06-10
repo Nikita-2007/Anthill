@@ -32,39 +32,14 @@ class AI {
 
     //Конструктор
     constructor(ant) {
-        //Входящие данные
-        /*
-        this.inputNodes = [
-            ant.life/=100,
-            !!ant.target,
-            ant.load instanceof Food,
-            ant.load instanceof Rock,
-            !!ant.listTarget.colony,
-            !!ant.listTarget.ally,
-            !!ant.listTarget.alien,
-            !!ant.listTarget.food,
-            !!ant.listTarget.rock,
-            !!ant.listTarget.labFood,
-            !!ant.listTarget.labAnt,
-        ];
-        */
-
-        this.hidenNodes1 = new Array(6);
-
-        this.hidenNodes2 = new Array(8);
-
-        //Выходящие данные
-        this.outputNodes = [
-            Action.wait,
-            Action.find,
-            Action.back,
-            Action.move,
-            Action.grab,
-            Action.kick,
-            Action.drop,
-            Action.info,
-            Action.flex
-        ];
+        //Въодящая нода
+        this.inputNodes = this.fillNodes(this.countIn);
+        //Промежуточная нода 1
+        this.hidenNodes1 = this.fillNodes(this.count1);
+        //Промежуточная нода 2
+        this.hidenNodes2 = this.fillNodes(this.count2);
+        //Исходящая нода
+        this.outputNodes = this.fillNodes(this.countOut);
     }
 
     //Инициализация
@@ -78,13 +53,64 @@ class AI {
     select(ant) {
         if (ant.life <= 0)
             ant.action = Action.dead;
-        else
-            ant.action = Action.listAction[Math.floor((Action.listAction.length-1)*Math.random())];
+        else {
+            this.inputNodes = this.normInput(ant);
+
+            this.hidenNodes1 = this.synapse(this.inputNodes, ant.nn.w1, this.hidenNodes1);
+            this.hidenNodes1 = this.norm(this.hidenNodes1);
+
+            this.hidenNodes2 = this.synapse(this.hidenNodes1, ant.nn.w2, this.hidenNodes2);
+            this.hidenNodes2 = this.norm(this.hidenNodes2);
+
+            //this.outputNodes = this.synapse(this.hidenNodes2, ant.nn.w3, this.outputNodes);
+            this.outputNodes[1] = 1; ///////////////////////////////////////////
+            let maxi = Math.max(...this.outputNodes);
+            let index = this.outputNodes.indexOf(maxi);
+            ant.action = Action.listAction[index]; //Math.max(...arr)
+        }
     }
 
+    //Заболнение нод
+    fillNodes(count) {
+        let node = [];
+        for (let i = 0; i < count; i++)
+            node[i] = 0.0; //
+        return node;
+    }
+
+    //Нормалтзация входящих данных
+    normInput(ant) {
+        //Нормировка входящих данные
+        let node = [
+            ant.life/=100,
+            !!ant.target,
+            ant.load instanceof Food,
+            ant.load instanceof Rock,
+            !!ant.listTarget.colony,
+            !!ant.listTarget.ally,
+            !!ant.listTarget.alien,
+            !!ant.listTarget.food,
+            !!ant.listTarget.rock,
+            !!ant.listTarget.labFood,
+            !!ant.listTarget.labAnt,
+        ];
+        return node;
+    }
+    
+    //Нормализация от 0 до 1
+    norm(node) {
+        return node;
+    }
+
+    //Расчёт данных нейронов
+    synapse(start, w, finish) {
+        return 0;
+    }
+
+    //Случайное заполнение весов
     rndSynapse(start, finish) {
         let node = [];
-        //Цикл
+        //Циклы
         for (let i = 0; i < start; i++) {
             node[i] = [];
             for (let j = 0; j < finish; j++) {

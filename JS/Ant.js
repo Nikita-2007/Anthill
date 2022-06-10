@@ -27,7 +27,6 @@ class Ant {
                 w3: []
             };
             this.ai.init(this);
-            console.log(this.nn);//////////////////////////////////////////////
         }
     }
 
