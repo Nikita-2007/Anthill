@@ -11,8 +11,8 @@ class Action {
         Action.kick,
         Action.drop,
         Action.info,
-        Action.flex,
-        Action.dead
+        Action.flex
+        //Action.dead
     ];
 
     //Ожидание
@@ -49,31 +49,34 @@ class Action {
 
     //Поднятие
     static grab(ant) {
-        ant.score += 5;
+        if (ant.target instanceof Food) {
+            ant.score += 5;
+            let food = Math.min(ant.target.weight, ant.life/2);
+            ant.target.weight -= food;
+            ant.load = new Food(ant.pos, food);
+            ant.speed = 2.5;
+            if (ant.target.weight <= 0)
+                model.delFood();
+        }
         ant.timer = 5;
         ant.walk = false;
-        let food = Math.min(ant.target.weight, ant.life/2);
-        ant.target.weight -= food;
-        ant.load = new Food(ant.pos, food);
-        ant.speed = 2.5;
-        if (ant.target.weight <= 0)
-            model.delFood();
     }
 
     //Удар
     static kick(ant) {
-        ant.target = ant.listTarget.alien;
-        ant.score += 10;
+        if (ant.target instanceof Ant && ant.target.color != ant.color) {
+            ant.target = ant.listTarget.alien;
+            ant.score += 10;
+            if (model.delta(ant.pos, ant.target) < 5) {
+                ant.target.life -= 20;
+                ant.target = false;
+            }
+            else {
+                ant.action = Action.wait;
+            }
+        }
         ant.timer = 5;
         ant.walk = false;
-        if (model.delta(ant.pos, ant.target) < 5) {
-            ant.target.life -= 20;
-            console.log(ant.target.life);
-            ant.target = false;
-        }
-        else {
-            ant.action = Action.wait;
-        }
     }
 
     //Смерть
@@ -89,12 +92,15 @@ class Action {
 
     //Выброс
     static drop(ant) {
-        ant.score += 20;
+        if (ant.target instanceof Colony) {
+            ant.score += 20;
+            ant.target.food += ant.load.weight;
+            ant.load = false;
+            ant.speed = 4;
+        }
+        
         ant.timer = 5;
         ant.walk = false;
-        ant.target.food += ant.load.weight;
-        ant.load = false;
-        ant.speed = 4;
     }
 
     //Учение
