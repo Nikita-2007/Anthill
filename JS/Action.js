@@ -6,7 +6,6 @@ class Action {
         Action.wait,
         Action.find,
         Action.back,
-        Action.move,
         Action.grab,
         Action.kick,
         Action.drop,
