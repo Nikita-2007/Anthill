@@ -48,6 +48,7 @@ class Ant {
 
     //Шаг
     goStep() {
+        this.life -= 0.1;
         let pos = model.intPos(this.pos);
         model.map[pos.x][pos.y] = false;
         let angle = this.angle-Math.PI/2;
@@ -156,7 +157,7 @@ class Ant {
         if (control.info) {
             ctx.fillStyle='White';
             ctx.font = "8pt Arial";
-            ctx.fillText(this.action.name + " " + this.timer + " " + this.score, x, y-20);
+            ctx.fillText(this.action.name + " " + this.timer + " " + this.life, x, y-20);
             ctx.strokeRect(x-this.range, y-this.range, this.range*2, this.range*2);
         }
     }

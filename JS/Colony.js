@@ -13,7 +13,7 @@ class Colony {
         this.listAnt = [];
         this.timer = 100;
         this.delay = Math.round(this.timer/6,666666666666667);
-        this.ai = new AI();
+        this.ai = new PI();
         this.pos = {
             x: pos.x,
             y: pos.y
@@ -26,10 +26,11 @@ class Colony {
         for(let ant of this.listAnt) {
             ant.update();
             ant.pos = model.intPos(ant.pos);
-            if (ant.life > -10)
-                listAnt.push(ant)
+            if (ant.timer < -200)
+                model.newFood({x:ant.pos.x, y :ant.pos.y}, 100);
             else {
-                model.newFood({x:ant.pos.x, y :ant.pos.y}, 100+ant.load.weight);
+                listAnt.push(ant);
+                ant.update();
             }
         }
         if (this.listAnt.length == 0 && this.food < 100 && this.food > 0) {

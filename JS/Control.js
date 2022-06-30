@@ -19,7 +19,7 @@ class Control {
         setInterval(() => this.update(), this.fps);
         onclick = (e) => this.onClick(e);
         onkeydown = (e) => this.onKeyDown(e);
-        this.Load();
+        //this.Load();
     }
 
     //Обновление

@@ -64,29 +64,22 @@ class Action {
     //Удар
     static kick(ant) {
         if (ant.target instanceof Ant && ant.target.color != ant.color) {
-            ant.target = ant.listTarget.alien;
-            ant.score += 10;
-            if (model.delta(ant.pos, ant.target) < 5) {
-                ant.target.life -= 20;
-                ant.target = false;
-            }
-            else {
-                ant.action = Action.wait;
-            }
+            ant.listTarget.alien = ant.target;
+            ant.angle = ant.getAngle(ant.pos, ant.target);
+            ant.target.life -= 10;
+            ant.score += 100
         }
-        ant.timer = 5;
         ant.walk = false;
+        ant.timer = 10;
     }
 
     //Смерть
     static dead(ant) {
-        ant.timer = 20;
         ant.walk = false;
         ant.color = 'rgba(0,0,0,0.25)';
         if (ant.load)
-            ant.action = Action.drop;
-        ant.target = ant.pos;
-        ant.pos = ant.target;
+            ant.action = model.newFood(model.rndPos(ant.pos, 4), ant.load.weight);
+        ant.load = false;
     }
 
     //Выброс
