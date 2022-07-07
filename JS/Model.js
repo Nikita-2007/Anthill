@@ -7,9 +7,9 @@ class Model {
             width: window.innerWidth,
             height: window.innerHeight
         };
-        this.base = 8;
+        this.base = 1;
         this.food = 256;
-        this.numFood = 0;
+        this.numFood = 512;
         this.numRock = 212;
         this.numBlock = 128;
         

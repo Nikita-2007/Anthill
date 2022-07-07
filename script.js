@@ -24,7 +24,6 @@ let listLib = [
     'FileSaver.js'
 ];
 
-
 for (let name of listLib) {
     let script = document.createElement('script');
     script.src = 'Libs/'+name;

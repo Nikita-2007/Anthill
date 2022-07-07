@@ -3,17 +3,18 @@
 class Ant {
     //Конструктор
     constructor(colony) {
-        this.color = colony.color;
-        this.pos = model.rndPos(colony.pos, 4);
+        this.colony = colony;
+        this.color = this.colony.color;
+        this.pos = model.rndPos(this.colony.pos, 4);
         this.action = Action.wait;
-        this.ai = colony.ai;
+        this.ai = this.colony.ai;
         this.life = 100;
         this.range = 60;
         this.target = {pos: model.rndPos(this.pos, this.range)};
         this.angle = this.getAngle(this.pos, this.target);
         this.timer = 0;
         this.pose = false;
-        this.speed = 4;
+        this.speed = 2;
         this.load = false;
         this.walk = true;
         this.labelTime = 5;
@@ -48,7 +49,7 @@ class Ant {
 
     //Шаг
     goStep() {
-        this.life -= 0.1;
+        this.life -= 0.05;
         let pos = model.intPos(this.pos);
         model.map[pos.x][pos.y] = false;
         let angle = this.angle-Math.PI/2;
@@ -157,7 +158,8 @@ class Ant {
         if (control.info) {
             ctx.fillStyle='White';
             ctx.font = "8pt Arial";
-            ctx.fillText(this.action.name + " " + this.timer + " " + this.life, x, y-20);
+            ctx.fillText(this.action.name + " " + this.timer, x, y-20);
+            ctx.fillText("+", this.target.pos.x, this.target.pos.y);
             ctx.strokeRect(x-this.range, y-this.range, this.range*2, this.range*2);
         }
     }
@@ -172,7 +174,7 @@ class Ant {
             rock: false,
             labFood: false,
             labAnt: false,
-            random: {pos: model.rndPos(this.pos, this.range)}
+            random: false
         }
         //this.pos = model.intPos(this.pos);
         for (let i = 1; i <= this.range; i++) {
@@ -184,6 +186,18 @@ class Ant {
             for (let j = sector.top+1; j <= sector.bottom-1; j++) {
                 this.memory(model.map[sector.left][j], model.air[sector.left][j]);
                 this.memory(model.map[sector.right][j], model.air[sector.right][j]);
+            }
+        }
+        if (!this.load)
+            this.listTarget.random = {pos: model.rndPos(this.pos, this.range)};
+        else {
+            let dCol = model.delta(this.colony.pos, this);
+            let dRnd = dCol;
+            let limit = 3;
+            while(dCol <= dRnd && limit >= 0) {
+                this.listTarget.random = {pos: model.rndPos(this.pos, this.range)};
+                dRnd = model.delta(this.colony.pos, this.listTarget.random);
+                limit--;
             }
         }
         return this.listTarget;

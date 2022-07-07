@@ -36,7 +36,7 @@ class Food extends Items {
         if (control.info) {
             ctx.fillStyle='White';
             ctx.font = "6pt Arial"
-            ctx.fillText(this.weight, this.pos.x, this.pos.y-5);
+            ctx.fillText(Math.round(this.weight), this.pos.x, this.pos.y-5);
         }
     }
 }

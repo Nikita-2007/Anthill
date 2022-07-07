@@ -53,7 +53,7 @@ class Action {
             let food = Math.min(ant.target.weight, ant.life/2);
             ant.target.weight -= food;
             ant.load = new Food(ant.pos, food);
-            ant.speed = 2.5;
+            ant.speed = 1.5;
             if (ant.target.weight <= 0)
                 model.delFood();
         }
@@ -88,7 +88,7 @@ class Action {
             ant.score += 20;
             ant.target.food += ant.load.weight;
             ant.load = false;
-            ant.speed = 4;
+            ant.speed = 2;
         }
         
         ant.timer = 5;
