@@ -24,7 +24,6 @@ class Colony {
     update() {
         let listAnt = [];
         for(let ant of this.listAnt) {
-            ant.update();
             ant.pos = model.intPos(ant.pos);
             if (ant.timer < -200)
                 model.newFood({x:ant.pos.x, y :ant.pos.y}, 100);
