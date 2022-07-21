@@ -29,6 +29,7 @@ class Ant {
             };
             this.ai.init(this);
         }
+        this.kill = 0;
     }
 
     //Обновление
@@ -158,7 +159,7 @@ class Ant {
         if (control.info) {
             ctx.fillStyle='White';
             ctx.font = "8pt Arial";
-            ctx.fillText(this.action.name + " " + this.timer, x, y-20);
+            ctx.fillText(this.kill, x, y-20);
             ctx.fillText("+", this.target.pos.x, this.target.pos.y);
             ctx.strokeRect(x-this.range, y-this.range, this.range*2, this.range*2);
         }

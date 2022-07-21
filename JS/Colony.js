@@ -18,6 +18,8 @@ class Colony {
             x: pos.x,
             y: pos.y
         }
+        this.lose = 0;
+        this.kills = 0;
     }
 
     //Обновление
@@ -47,6 +49,7 @@ class Colony {
                 this.delay = Math.round(this.timer/6,666666666666667);
             }
         }
+        model.map[this.pos.x][this.pos.y] = this;
     }
 
     //Отрисовка
@@ -62,7 +65,13 @@ class Colony {
         if (control.info) {
             ctx.fillStyle='White';
             ctx.font = "8pt Arial"
-            ctx.fillText(this.listAnt.length, this.pos.x, this.pos.y);
+            ctx.fillText(this.listAnt.length, this.pos.x, this.pos.y-10);
+            ctx.fillStyle='Black';
+            ctx.fillText(this.lose, this.pos.x-10, this.pos.y);
+            ctx.fillStyle='Red';
+            ctx.fillText(this.kills, this.pos.x+10, this.pos.y);
+            ctx.fillStyle='Blue';
+            ctx.fillText(Math.round(this.kills/Math.max(this.lose, 1)*10)/10, this.pos.x, this.pos.y+10);
         }
     }
     //Выбор цвета

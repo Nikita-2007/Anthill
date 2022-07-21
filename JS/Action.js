@@ -68,6 +68,12 @@ class Action {
             ant.angle = ant.getAngle(ant.pos, ant.target);
             ant.target.life -= 10;
             ant.score += 100
+            if (ant.target.life <= 0) {
+                ant.kill += 1;
+                ant.colony.kills += 1;
+                ant.target.colony.lose += 1;
+                ant.action = this.wait;
+            }
         }
         ant.walk = false;
         ant.timer = 10;
