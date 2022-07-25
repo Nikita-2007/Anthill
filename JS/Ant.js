@@ -160,7 +160,8 @@ class Ant {
             ctx.fillStyle='White';
             ctx.font = "8pt Arial";
             ctx.fillText(this.kill, x, y-20);
-            ctx.fillText("+", this.target.pos.x, this.target.pos.y);
+            if (this.target)
+                ctx.fillText("+", this.target.pos.x, this.target.pos.y);
             ctx.strokeRect(x-this.range, y-this.range, this.range*2, this.range*2);
         }
     }
