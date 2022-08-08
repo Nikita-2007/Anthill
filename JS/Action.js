@@ -22,14 +22,16 @@ class Action {
 
     //Поиск
     static find(ant) {
+        ant.walk = true;
         if (ant.listTarget.food)
             ant.target = ant.listTarget.food;
         else if (ant.listTarget.alien)
             ant.target = ant.listTarget.alien;
+        else if (ant.listTarget.labFood && Math.round(Math.random()*1.5))
+            ant.target = ant.listTarget.labFood;
         else
             ant.target = ant.listTarget.random;
         ant.score += 1;
-        ant.walk = true;
         ant.angle = ant.getAngle(ant.pos, ant.target);
         ant.timer = Math.round(model.delta(ant.pos, ant.target)/ant.speed);
     }
@@ -53,6 +55,7 @@ class Action {
             let food = Math.min(ant.target.weight, ant.life/2);
             ant.target.weight -= food;
             ant.load = new Food(ant.pos, food);
+            ant.life = 100;
             ant.speed = 1.5;
             if (ant.target.weight <= 0)
                 model.delFood();
@@ -66,17 +69,17 @@ class Action {
         if (ant.target instanceof Ant && ant.target.color != ant.color) {
             ant.listTarget.alien = ant.target;
             ant.angle = ant.getAngle(ant.pos, ant.target);
-            ant.target.life -= 10;
+            ant.target.life -= 15;
             ant.score += 100
             if (ant.target.life <= 0) {
                 ant.kill += 1;
                 ant.colony.kills += 1;
                 ant.target.colony.lose += 1;
-                ant.action = this.wait;
             }
         }
         ant.walk = false;
         ant.timer = 10;
+        ant.target = false;
     }
 
     //Смерть
@@ -95,6 +98,7 @@ class Action {
             ant.target.food += ant.load.weight;
             ant.load = false;
             ant.speed = 2;
+            ant.life = 100;
         }
         
         ant.timer = 5;

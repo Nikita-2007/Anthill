@@ -207,19 +207,21 @@ class Ant {
 
     //Запоминание объектов
     memory(point, smell) {
+        //ОБЪЕКТЫ
         if (point instanceof Colony && point.color == this.color)
             this.listTarget.colony = point;
-        else if (point instanceof Ant && point.color == this.color)
-            this.listTarget.ally = point;
-        else if (point instanceof Ant && point.load instanceof Food)
-            this.listTarget.alien = point;
-        else if (point instanceof Food)
-            this.listTarget.food = point;
         else if (point instanceof Rock)
             this.listTarget.rock = point;
-        if (smell instanceof Label && smell.color == Food.color)
+        else if (!this.listTarget.food && point instanceof Food)
+            this.listTarget.food = point;
+        else if (point instanceof Ant && point.color == this.color)
+            this.listTarget.ally = point;
+        else if (!this.listTarget.alien && point instanceof Ant && point.load instanceof Food)
+            this.listTarget.alien = point;
+        //ЗАПАХИ
+        if (smell instanceof Label && smell.color == Food.color && (!this.listTarget.labFood || smell.weight < this.listTarget.labFood.weight))
             this.listTarget.labFood = smell;
-        else if (smell instanceof Label)
+        else if (smell instanceof Label && false)
             this.listTarget.labAnt = smell;
     }
 

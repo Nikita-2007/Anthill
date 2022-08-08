@@ -50,9 +50,11 @@ class Model {
             this.listColony.push(colony);
             this.map[colony.pos.x][colony.pos.y] = colony;
         }
-        for (let i = 0; i < this.numFood/2; i++) {
+        for (let i = 0; i < this.numFood; i++) {
+            if (i % 8 > 0)
+                this.newFood(this.rndPos({x: this.size.width/2, y: this.size.height/2}, 100));
+            else
             this.newFood(this.rndPos());
-            this.newFood(this.rndPos({x: this.size.width/2, y: this.size.height/2}, 100));
         }
         for (let i = 0; i < this.numRock; i++) {
             let rock = new Rock(this.rndPos());
